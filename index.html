@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CBA · CUBAL 2025-26 球员画像</title>
+<style>
+  :root{--bg:#fafafa;--line:rgba(0,0,0,.07);--ink:#18181b;--ink2:#8e8e95;--accent:#4f46e5}
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{margin:0;background:var(--bg);font-family:-apple-system,"PingFang SC","Microsoft YaHei","Helvetica Neue",sans-serif}
+  .hub-nav{position:sticky;top:0;z-index:60;height:48px;display:flex;align-items:center;gap:20px;padding:0 20px;background:rgba(255,255,255,.85);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+  .hub-brand{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--ink);letter-spacing:.2px;min-width:150px;white-space:nowrap}
+  .hub-brand .hub-dot{width:8px;height:8px;border-radius:50%;background:var(--accent)}
+  .hub-seg{margin:0 auto;display:flex;background:#f0f0f2;border-radius:9px;padding:3px}
+  .hub-seg button{appearance:none;border:0;background:transparent;border-radius:7px;padding:5px 18px;font-size:13px;color:var(--ink2);cursor:pointer;font-family:inherit;transition:color .15s;white-space:nowrap}
+  .hub-seg button:hover{color:var(--ink)}
+  .hub-seg button[aria-selected="true"]{background:#fff;color:var(--ink);font-weight:600;box-shadow:0 1px 2px rgba(0,0,0,.08),0 0 0 1px rgba(0,0,0,.03)}
+  .hub-meta{font-size:12px;color:var(--ink2);min-width:150px;text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+  .hub-stage{height:calc(100vh - 48px)}
+  .hub-stage iframe{width:100%;height:100%;border:0;display:none;background:var(--bg)}
+  .hub-stage iframe.hub-on{display:block}
+  @media (max-width:720px){
+    .hub-meta{display:none}
+    .hub-brand{min-width:0}
+    .hub-nav{gap:10px;padding:0 12px}
+  }
+</style>
+</head>
+<body>
+<header class="hub-nav">
+  <div class="hub-brand"><span class="hub-dot"></span>球员画像 2025-26</div>
+  <nav class="hub-seg" role="tablist" aria-label="联赛切换">
+    <button id="hub-tab-cba" role="tab" aria-selected="true" aria-controls="hub-frame-cba">CBA 2025-26</button>
+    <button id="hub-tab-cubal" role="tab" aria-selected="false" aria-controls="hub-frame-cubal">CUBAL 2025-26</button>
+  </nav>
+  <div class="hub-meta" id="hub-meta">2025-26 赛季</div>
+</header>
+<main class="hub-stage">
+  <iframe id="hub-frame-cba" class="hub-on" title="CBA 2025-26 球员画像" data-src="cba_archetype_2025-26.html"></iframe>
+  <iframe id="hub-frame-cubal" title="CUBAL 2025-26 球员画像" data-src="cubal_archetype_2025-26.html"></iframe>
+</main>
+<script>
+(function () {
+  "use strict";
+  var TABS = ["cba", "cubal"];
+  var META = {
+    cba: "CBA · 2025-26 赛季",
+    cubal: "CUBAL · 2025-26 赛季"
+  };
+  var h0 = location.hash.replace("#", "");
+  var current = (TABS.indexOf(h0) >= 0) ? h0 : "cba";
+  var loaded = { cba: false, cubal: false };
+
+  function el(id) { return document.getElementById(id); }
+
+  function loadFrame(key) {
+    if (loaded[key]) { return; }
+    var f = el("hub-frame-" + key);
+    f.src = f.getAttribute("data-src");
+    loaded[key] = true;
+  }
+
+  function render() {
+    TABS.forEach(function (k) {
+      var on = (k === current);
+      el("hub-tab-" + k).setAttribute("aria-selected", on ? "true" : "false");
+      el("hub-frame-" + k).classList.toggle("hub-on", on);
+    });
+    el("hub-meta").textContent = META[current];
+  }
+
+  function go(key) {
+    current = key;
+    render();
+    loadFrame(key);
+    try { history.replaceState(null, "", "#" + key); } catch (e) { /* file 协议下忽略 */ }
+  }
+
+  TABS.forEach(function (k) {
+    el("hub-tab-" + k).addEventListener("click", function () { go(k); });
+  });
+  window.addEventListener("hashchange", function () {
+    var k = location.hash.replace("#", "");
+    if (TABS.indexOf(k) >= 0 && k !== current) { go(k); }
+  });
+
+  render();
+  // 当前标签立即加载，另一标签延迟预取，切换无白屏
+  loadFrame(current);
+  setTimeout(function () { TABS.forEach(loadFrame); }, 2500);
+})();
+</script>
+</body>
+</html>
