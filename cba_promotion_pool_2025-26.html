@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>升入CBA分析：从大学联赛到 CBA</title>
+<style>
+  :root{
+    --surface:#fff;
+    --border:rgba(0,0,0,.06);
+    --text:#18181b;
+    --muted:#44444a;
+    --faint:#8e8e95;
+    --accent:#5e6ad2;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{background:#fafafa;}
+  body{
+    width:1280px;margin:0 auto;
+    background:#fafafa;color:var(--text);
+    font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;
+    font-variant-numeric:tabular-nums;
+    -webkit-font-smoothing:antialiased;
+  }
+  .page{padding:56px 64px 48px;}
+  .eyebrow{
+    font-size:11px;letter-spacing:.2em;color:var(--faint);
+    margin-bottom:14px;font-weight:500;
+  }
+  .eyebrow b{color:var(--accent);font-weight:600;letter-spacing:.2em;}
+  h1{font-size:27px;font-weight:650;letter-spacing:.01em;margin-bottom:10px;}
+  .sub{font-size:13px;color:var(--muted);line-height:1.7;max-width:760px;}
+  .card{
+    margin-top:26px;background:var(--surface);
+    border:1px solid var(--border);border-radius:14px;
+    box-shadow:0 1px 2px rgba(0,0,0,.04),0 8px 28px rgba(24,24,27,.04);
+    padding:22px 26px 16px;position:relative;
+  }
+  .chips{
+    position:absolute;top:20px;right:24px;
+    display:flex;align-items:center;gap:8px;z-index:2;
+  }
+  .chip{
+    display:inline-flex;align-items:center;gap:7px;
+    font-size:12px;font-weight:500;color:var(--accent);
+    background:rgba(94,106,210,.07);
+    border:1px solid rgba(94,106,210,.38);
+    border-radius:999px;padding:5px 13px 5px 11px;line-height:1;
+    user-select:none;
+  }
+  .chip .num{font-weight:650;}
+  .chip .mark{width:8px;height:8px;border-radius:50%;flex:none;}
+  .chip .mark.solid{background:var(--accent);}
+  .chip .mark.hollow{background:transparent;border:1.4px solid var(--accent);}
+  .chip-note{font-size:10px;color:var(--faint);letter-spacing:.02em;}
+  svg{display:block;width:100%;height:auto;}
+  .footrow{
+    margin-top:16px;display:flex;justify-content:space-between;
+    align-items:center;gap:24px;
+  }
+  .footnote{font-size:11.5px;color:var(--faint);line-height:1.6;}
+  .cta{
+    flex:none;background:var(--accent);color:#fff;
+    font-size:14px;font-weight:550;letter-spacing:.04em;
+    padding:11px 26px;border-radius:10px;
+    box-shadow:0 2px 6px rgba(94,106,210,.32),0 8px 20px rgba(94,106,210,.18);
+    cursor:default;
+  }
+  text{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;}
+  .ticktxt{font-size:11px;fill:var(--faint);font-variant-numeric:tabular-nums;}
+  .axistitle{font-size:12.5px;fill:var(--muted);font-weight:500;}
+  .axisnote{font-size:11px;fill:var(--faint);}
+  .axisend{font-size:11px;fill:var(--faint);letter-spacing:.06em;}
+  .plbl{
+    font-size:11px;fill:#3a3a44;font-weight:500;
+    paint-order:stroke;stroke:rgba(255,255,255,.93);stroke-width:3px;
+    stroke-linejoin:round;
+  }
+  .zonelbl{font-size:10px;fill:rgba(94,106,210,.62);letter-spacing:.14em;font-weight:500;}
+  .bignum{font-weight:650;fill:var(--accent);font-variant-numeric:tabular-nums;}
+  .bigsub{font-size:11px;fill:var(--muted);}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="eyebrow">赛事观察</div>
+  <h1>升入CBA分析：从大学联赛到 CBA</h1>
+  <p class="sub">CUBA 历史训练池 704 人，其中 24 人后来升入 CBA。</p>
+
+  <div class="card">
+    <div class="chips">
+      <span class="chip"><span class="mark solid"></span>升入CBA者 <span class="num">24</span></span>
+      <span class="chip"><span class="mark hollow"></span>遗珠 <span class="num">47</span></span>
+    </div>
+    <svg id="plot" viewBox="0 0 980 560" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="得分效率与身高散点图"></svg>
+  </div>
+
+</div>
+
+<script id="dataset" type="application/json">{"dots":[{"x":0.601,"y":198,"g":"promoted","n":"邹阳","s":"2022-23","p":48.4},{"x":0.456,"y":201,"g":"other"},{"x":0.51,"y":194,"g":"other"},{"x":0.456,"y":183,"g":"other"},{"x":0.579,"y":195,"g":"other"},{"x":0.431,"y":190,"g":"other"},{"x":0.661,"y":188,"g":"other"},{"x":0.483,"y":178,"g":"other"},{"x":0.505,"y":184,"g":"other"},{"x":0.456,"y":188,"g":"other"},{"x":0.361,"y":196,"g":"other"},{"x":0.405,"y":173,"g":"other"},{"x":0.486,"y":175,"g":"other"},{"x":0.475,"y":192,"g":"other"},{"x":0.536,"y":202,"g":"other"},{"x":0.61,"y":195,"g":"other"},{"x":0.402,"y":190,"g":"other"},{"x":0.399,"y":193,"g":"other"},{"x":0.444,"y":200,"g":"other"},{"x":0.598,"y":200,"g":"other"},{"x":0.485,"y":204,"g":"other"},{"x":0.454,"y":190,"g":"other"},{"x":0.472,"y":200,"g":"other"},{"x":0.557,"y":188,"g":"other"},{"x":0.255,"y":183,"g":"other"},{"x":0.456,"y":198,"g":"other"},{"x":0.521,"y":180,"g":"other"},{"x":0.457,"y":193,"g":"other"},{"x":0.588,"y":192,"g":"other"},{"x":0.276,"y":173,"g":"other"},{"x":0.536,"y":180,"g":"other"},{"x":0.52,"y":193,"g":"other"},{"x":0.4,"y":200,"g":"other"},{"x":0.25,"y":180,"g":"other"},{"x":0.396,"y":181,"g":"other"},{"x":0.555,"y":190,"g":"other"},{"x":0.45,"y":195,"g":"other"},{"x":0.436,"y":198,"g":"other"},{"x":0.391,"y":180,"g":"other"},{"x":0.475,"y":196,"g":"other"},{"x":0.404,"y":197,"g":"other"},{"x":0.508,"y":182,"g":"other"},{"x":0.394,"y":194,"g":"other"},{"x":0.482,"y":190,"g":"other"},{"x":0.34,"y":185,"g":"other"},{"x":0.549,"y":183,"g":"other"},{"x":0.46,"y":192,"g":"other"},{"x":0.523,"y":197,"g":"other"},{"x":0.585,"y":200,"g":"other"},{"x":0.529,"y":202,"g":"other"},{"x":0.445,"y":190,"g":"other"},{"x":0.369,"y":186,"g":"other"},{"x":0.538,"y":201,"g":"other"},{"x":0.543,"y":190,"g":"other"},{"x":0.438,"y":195,"g":"other"},{"x":0.636,"y":200,"g":"promoted","n":"付泳畅","s":"2022-23","p":31.8},{"x":0.527,"y":190,"g":"other"},{"x":0.647,"y":202,"g":"promoted","n":"陈国豪","s":"2022-23","p":35.2},{"x":0.493,"y":193,"g":"other"},{"x":0.476,"y":185,"g":"other"},{"x":0.349,"y":198,"g":"other"},{"x":0.434,"y":200,"g":"other"},{"x":0.433,"y":192,"g":"other"},{"x":0.392,"y":184,"g":"other"},{"x":0.457,"y":190,"g":"other"},{"x":0.448,"y":201,"g":"other"},{"x":0.562,"y":183,"g":"other"},{"x":0.5,"y":201,"g":"other"},{"x":0.569,"y":193,"g":"other"},{"x":0.374,"y":196,"g":"other"},{"x":0.507,"y":193,"g":"other"},{"x":0.568,"y":197,"g":"other"},{"x":0.476,"y":205,"g":"other"},{"x":0.539,"y":185,"g":"other"},{"x":0.384,"y":188,"g":"other"},{"x":0.584,"y":206,"g":"sleeper","n":"杨佳龙","s":"2022-23","p":29.9},{"x":0.513,"y":186,"g":"other"},{"x":0.496,"y":199,"g":"sleeper","n":"杨峻一","s":"2022-23","p":34.4},{"x":0.481,"y":186,"g":"other"},{"x":0.709,"y":200,"g":"other"},{"x":0.388,"y":187,"g":"other"},{"x":0.59,"y":194,"g":"other"},{"x":0.501,"y":187,"g":"other"},{"x":0.697,"y":185,"g":"other"},{"x":0.486,"y":195,"g":"other"},{"x":0.676,"y":194,"g":"other"},{"x":0.613,"y":207,"g":"promoted","n":"杜伯超","s":"2022-23","p":32.6},{"x":0.49,"y":187,"g":"other"},{"x":0.453,"y":195,"g":"other"},{"x":0.481,"y":197,"g":"other"},{"x":0.464,"y":178,"g":"other"},{"x":0.418,"y":204,"g":"other"},{"x":0.5,"y":185,"g":"other"},{"x":0.576,"y":187,"g":"other"},{"x":0.498,"y":193,"g":"other"},{"x":0.48,"y":188,"g":"other"},{"x":0.58,"y":198,"g":"other"},{"x":0.444,"y":195,"g":"other"},{"x":0.394,"y":191,"g":"other"},{"x":0.331,"y":192,"g":"other"},{"x":0.534,"y":198,"g":"other"},{"x":0.372,"y":188,"g":"other"},{"x":0.473,"y":190,"g":"other"},{"x":0.472,"y":182,"g":"other"},{"x":0.323,"y":180,"g":"other"},{"x":0.495,"y":196,"g":"other"},{"x":0.448,"y":190,"g":"other"},{"x":0.506,"y":188,"g":"other"},{"x":0.365,"y":185,"g":"other"},{"x":0.389,"y":188,"g":"other"},{"x":0.402,"y":187,"g":"other"},{"x":0.328,"y":195,"g":"other"},{"x":0.385,"y":185,"g":"other"},{"x":0.536,"y":182,"g":"other"},{"x":0.445,"y":198,"g":"other"},{"x":0.371,"y":193,"g":"other"},{"x":0.361,"y":198,"g":"other"},{"x":0.52,"y":190,"g":"other"},{"x":0.523,"y":193,"g":"other"},{"x":0.57,"y":183,"g":"other"},{"x":0.49,"y":185,"g":"other"},{"x":0.258,"y":187,"g":"other"},{"x":0.287,"y":180,"g":"other"},{"x":0.567,"y":180,"g":"other"},{"x":0.373,"y":180,"g":"other"},{"x":0.465,"y":180,"g":"other"},{"x":0.392,"y":190,"g":"other"},{"x":0.565,"y":180,"g":"other"},{"x":0.503,"y":188,"g":"other"},{"x":0.547,"y":185,"g":"other"},{"x":0.366,"y":190,"g":"other"},{"x":0.253,"y":177,"g":"other"},{"x":0.393,"y":180,"g":"other"},{"x":0.237,"y":181,"g":"other"},{"x":0.472,"y":188,"g":"other"},{"x":0.414,"y":192,"g":"other"},{"x":0.252,"y":181,"g":"other"},{"x":0.429,"y":174,"g":"other"},{"x":0.454,"y":185,"g":"other"},{"x":0.656,"y":183,"g":"other"},{"x":0.498,"y":180,"g":"other"},{"x":0.636,"y":186,"g":"other"},{"x":0.537,"y":207,"g":"other"},{"x":0.535,"y":180,"g":"other"},{"x":0.516,"y":196,"g":"other"},{"x":0.398,"y":176,"g":"other"},{"x":0.482,"y":185,"g":"other"},{"x":0.571,"y":191,"g":"other"},{"x":0.488,"y":200,"g":"other"},{"x":0.683,"y":195,"g":"other"},{"x":0.52,"y":198,"g":"other"},{"x":0.545,"y":202,"g":"other"},{"x":0.529,"y":181,"g":"other"},{"x":0.444,"y":190,"g":"other"},{"x":0.368,"y":205,"g":"other"},{"x":0.504,"y":181,"g":"other"},{"x":0.416,"y":193,"g":"other"},{"x":0.457,"y":192,"g":"other"},{"x":0.581,"y":198,"g":"other"},{"x":0.522,"y":186,"g":"other"},{"x":0.599,"y":198,"g":"other"},{"x":0.456,"y":205,"g":"sleeper","n":"师圣恒","s":"2023-24","p":23.0},{"x":0.453,"y":183,"g":"other"},{"x":0.485,"y":183,"g":"other"},{"x":0.419,"y":200,"g":"other"},{"x":0.644,"y":197,"g":"sleeper","n":"杜文杰","s":"2023-24","p":36.1},{"x":0.468,"y":188,"g":"other"},{"x":0.423,"y":190,"g":"other"},{"x":0.473,"y":200,"g":"other"},{"x":0.496,"y":197,"g":"other"},{"x":0.361,"y":192,"g":"other"},{"x":0.342,"y":200,"g":"other"},{"x":0.45,"y":191,"g":"other"},{"x":0.503,"y":194,"g":"other"},{"x":0.329,"y":193,"g":"other"},{"x":0.132,"y":198,"g":"other"},{"x":0.409,"y":190,"g":"other"},{"x":0.464,"y":192,"g":"other"},{"x":0.444,"y":200,"g":"other"},{"x":0.422,"y":182,"g":"other"},{"x":0.386,"y":180,"g":"other"},{"x":0.192,"y":205,"g":"other"},{"x":0.473,"y":195,"g":"other"},{"x":0.5,"y":188,"g":"other"},{"x":0.446,"y":196,"g":"other"},{"x":0.576,"y":201,"g":"sleeper","n":"许强","s":"2023-24","p":20.3},{"x":0.253,"y":180,"g":"other"},{"x":0.4,"y":196,"g":"other"},{"x":0.545,"y":195,"g":"sleeper","n":"林思阳","s":"2023-24","p":44.5},{"x":0.522,"y":197,"g":"other"},{"x":0.487,"y":176,"g":"other"},{"x":0.569,"y":193,"g":"other"},{"x":0.507,"y":178,"g":"other"},{"x":0.471,"y":195,"g":"other"},{"x":0.491,"y":180,"g":"other"},{"x":0.516,"y":193,"g":"other"},{"x":0.711,"y":195,"g":"sleeper","n":"刘树立","s":"2023-24","p":36.6},{"x":0.404,"y":182,"g":"other"},{"x":0.518,"y":191,"g":"other"},{"x":0.546,"y":185,"g":"other"},{"x":0.38,"y":198,"g":"other"},{"x":0.372,"y":183,"g":"other"},{"x":0.342,"y":187,"g":"other"},{"x":0.413,"y":193,"g":"other"},{"x":0.544,"y":197,"g":"other"},{"x":0.533,"y":198,"g":"other"},{"x":0.286,"y":188,"g":"other"},{"x":0.387,"y":178,"g":"other"},{"x":0.589,"y":190,"g":"other"},{"x":0.383,"y":186,"g":"other"},{"x":0.414,"y":185,"g":"other"},{"x":0.522,"y":190,"g":"other"},{"x":0.623,"y":188,"g":"promoted","n":"邵炜昀","s":"2023-24","p":22.8},{"x":0.459,"y":180,"g":"other"},{"x":0.617,"y":196,"g":"other"},{"x":0.406,"y":195,"g":"other"},{"x":0.555,"y":183,"g":"other"},{"x":0.552,"y":185,"g":"other"},{"x":0.423,"y":196,"g":"other"},{"x":0.404,"y":185,"g":"other"},{"x":0.443,"y":180,"g":"other"},{"x":0.515,"y":190,"g":"other"},{"x":0.613,"y":198,"g":"other"},{"x":0.57,"y":200,"g":"sleeper","n":"史建深","s":"2023-24","p":21.4},{"x":0.484,"y":198,"g":"other"},{"x":0.527,"y":192,"g":"other"},{"x":0.557,"y":195,"g":"other"},{"x":0.495,"y":197,"g":"sleeper","n":"高鑫","s":"2023-24","p":36.3},{"x":0.462,"y":183,"g":"other"},{"x":0.38,"y":185,"g":"other"},{"x":0.55,"y":190,"g":"sleeper","n":"覃梁健","s":"2023-24","p":34.2},{"x":0.496,"y":190,"g":"other"},{"x":0.428,"y":175,"g":"other"},{"x":0.472,"y":172,"g":"other"},{"x":0.308,"y":185,"g":"other"},{"x":0.361,"y":190,"g":"other"},{"x":0.393,"y":174,"g":"other"},{"x":0.4,"y":185,"g":"other"},{"x":0.575,"y":195,"g":"other"},{"x":0.497,"y":192,"g":"other"},{"x":0.192,"y":185,"g":"other"},{"x":0.429,"y":188,"g":"other"},{"x":0.508,"y":171,"g":"other"},{"x":0.25,"y":178,"g":"other"},{"x":0.567,"y":175,"g":"other"},{"x":0.563,"y":199,"g":"other"},{"x":0.572,"y":195,"g":"sleeper","n":"宁志岩","s":"2023-24","p":38.5},{"x":0.466,"y":179,"g":"other"},{"x":0.596,"y":190,"g":"sleeper","n":"谢启乐","s":"2023-24","p":22.3},{"x":0.375,"y":183,"g":"other"},{"x":0.522,"y":200,"g":"other"},{"x":0.483,"y":193,"g":"other"},{"x":0.486,"y":186,"g":"other"},{"x":0.548,"y":193,"g":"sleeper","n":"张严丰","s":"2023-24","p":30.6},{"x":0.504,"y":187,"g":"other"},{"x":0.469,"y":201,"g":"other"},{"x":0.524,"y":182,"g":"other"},{"x":0.542,"y":198,"g":"other"},{"x":0.624,"y":190,"g":"sleeper","n":"王泓翔","s":"2023-24","p":29.3},{"x":0.535,"y":195,"g":"sleeper","n":"李硕","s":"2023-24","p":24.9},{"x":0.556,"y":185,"g":"other"},{"x":0.441,"y":188,"g":"other"},{"x":0.582,"y":206,"g":"promoted","n":"褚添一","s":"2023-24","p":48.1},{"x":0.581,"y":200,"g":"other"},{"x":0.446,"y":195,"g":"other"},{"x":0.506,"y":192,"g":"other"},{"x":0.48,"y":180,"g":"other"},{"x":0.576,"y":195,"g":"other"},{"x":0.425,"y":198,"g":"other"},{"x":0.517,"y":178,"g":"other"},{"x":0.371,"y":194,"g":"other"},{"x":0.371,"y":193,"g":"other"},{"x":0.23,"y":188,"g":"other"},{"x":0.599,"y":190,"g":"other"},{"x":0.634,"y":210,"g":"sleeper","n":"李政崇","s":"2023-24","p":20.0},{"x":0.395,"y":193,"g":"other"},{"x":0.461,"y":185,"g":"other"},{"x":0.421,"y":198,"g":"other"},{"x":0.558,"y":180,"g":"other"},{"x":0.595,"y":192,"g":"other"},{"x":0.609,"y":190,"g":"other"},{"x":0.433,"y":175,"g":"other"},{"x":0.552,"y":200,"g":"sleeper","n":"付永康","s":"2023-24","p":32.0},{"x":0.525,"y":200,"g":"other"},{"x":0.438,"y":184,"g":"other"},{"x":0.483,"y":203,"g":"other"},{"x":0.383,"y":183,"g":"other"},{"x":0.512,"y":205,"g":"other"},{"x":0.658,"y":197,"g":"promoted","n":"王凡懿","s":"2023-24","p":36.2},{"x":0.608,"y":210,"g":"promoted","n":"赵嘉浩","s":"2023-24","p":27.8},{"x":0.343,"y":180,"g":"other"},{"x":0.49,"y":193,"g":"other"},{"x":0.462,"y":198,"g":"other"},{"x":0.427,"y":178,"g":"other"},{"x":0.369,"y":176,"g":"other"},{"x":0.449,"y":192,"g":"other"},{"x":0.551,"y":205,"g":"promoted","n":"温淞","s":"2023-24","p":48.1},{"x":0.429,"y":184,"g":"other"},{"x":0.505,"y":192,"g":"promoted","n":"鲁骜","s":"2023-24","p":33.3},{"x":0.583,"y":192,"g":"promoted","n":"谢智杰","s":"2023-24","p":27.8},{"x":0.55,"y":188,"g":"other"},{"x":0.583,"y":204,"g":"other"},{"x":0.586,"y":208,"g":"other"},{"x":0.583,"y":201,"g":"promoted","n":"王云章","s":"2023-24","p":38.2},{"x":0.5,"y":193,"g":"other"},{"x":0.442,"y":190,"g":"other"},{"x":0.283,"y":192,"g":"other"},{"x":0.45,"y":182,"g":"other"},{"x":0.486,"y":185,"g":"other"},{"x":0.51,"y":189,"g":"other"},{"x":0.647,"y":198,"g":"other"},{"x":0.521,"y":197,"g":"sleeper","n":"李泽正","s":"2023-24","p":42.7},{"x":0.449,"y":196,"g":"other"},{"x":0.455,"y":174,"g":"other"},{"x":0.405,"y":175,"g":"other"},{"x":0.499,"y":178,"g":"other"},{"x":0.528,"y":202,"g":"other"},{"x":0.429,"y":193,"g":"other"},{"x":0.327,"y":178,"g":"other"},{"x":0.454,"y":180,"g":"other"},{"x":0.526,"y":190,"g":"other"},{"x":0.441,"y":190,"g":"other"},{"x":0.561,"y":190,"g":"other"},{"x":0.514,"y":188,"g":"other"},{"x":0.398,"y":195,"g":"other"},{"x":0.563,"y":200,"g":"other"},{"x":0.337,"y":200,"g":"other"},{"x":0.437,"y":180,"g":"other"},{"x":0.457,"y":200,"g":"other"},{"x":0.557,"y":205,"g":"other"},{"x":0.549,"y":193,"g":"other"},{"x":0.537,"y":190,"g":"other"},{"x":0.583,"y":196,"g":"other"},{"x":0.514,"y":193,"g":"other"},{"x":0.52,"y":195,"g":"other"},{"x":0.613,"y":193,"g":"promoted","n":"郑晓钢","s":"2023-24","p":36.5},{"x":0.577,"y":195,"g":"sleeper","n":"张博宇","s":"2023-24","p":45.2},{"x":0.645,"y":185,"g":"other"},{"x":0.686,"y":201,"g":"sleeper","n":"王俊麒","s":"2023-24","p":48.1},{"x":0.519,"y":177,"g":"other"},{"x":0.517,"y":198,"g":"other"},{"x":0.407,"y":190,"g":"other"},{"x":0.545,"y":197,"g":"other"},{"x":0.535,"y":200,"g":"other"},{"x":0.295,"y":185,"g":"other"},{"x":0.418,"y":178,"g":"other"},{"x":0.64,"y":204,"g":"other"},{"x":0.719,"y":188,"g":"other"},{"x":0.572,"y":189,"g":"other"},{"x":0.56,"y":210,"g":"promoted","n":"吴超","s":"2023-24","p":28.7},{"x":0.533,"y":203,"g":"other"},{"x":0.517,"y":188,"g":"other"},{"x":0.435,"y":196,"g":"other"},{"x":0.19,"y":193,"g":"other"},{"x":0.536,"y":182,"g":"other"},{"x":0.583,"y":186,"g":"other"},{"x":0.602,"y":200,"g":"other"},{"x":0.363,"y":201,"g":"other"},{"x":0.504,"y":183,"g":"other"},{"x":0.603,"y":197,"g":"sleeper","n":"赵刘其政","s":"2024-25","p":21.9},{"x":0.605,"y":185,"g":"other"},{"x":0.233,"y":195,"g":"other"},{"x":0.501,"y":193,"g":"other"},{"x":0.612,"y":200,"g":"other"},{"x":0.589,"y":201,"g":"sleeper","n":"管子煜","s":"2024-25","p":36.5},{"x":0.44,"y":188,"g":"other"},{"x":0.553,"y":185,"g":"other"},{"x":0.272,"y":178,"g":"other"},{"x":0.464,"y":180,"g":"other"},{"x":0.428,"y":203,"g":"other"},{"x":0.383,"y":196,"g":"other"},{"x":0.56,"y":192,"g":"other"},{"x":0.52,"y":193,"g":"other"},{"x":0.395,"y":198,"g":"other"},{"x":0.496,"y":178,"g":"other"},{"x":0.361,"y":188,"g":"other"},{"x":0.485,"y":188,"g":"other"},{"x":0.55,"y":193,"g":"other"},{"x":0.352,"y":188,"g":"other"},{"x":0.447,"y":192,"g":"other"},{"x":0.467,"y":188,"g":"other"},{"x":0.551,"y":190,"g":"other"},{"x":0.291,"y":195,"g":"other"},{"x":0.43,"y":197,"g":"other"},{"x":0.48,"y":197,"g":"other"},{"x":0.431,"y":205,"g":"other"},{"x":0.537,"y":188,"g":"other"},{"x":0.49,"y":180,"g":"other"},{"x":0.533,"y":190,"g":"other"},{"x":0.495,"y":183,"g":"other"},{"x":0.52,"y":198,"g":"other"},{"x":0.537,"y":185,"g":"other"},{"x":0.413,"y":188,"g":"other"},{"x":0.414,"y":197,"g":"other"},{"x":0.766,"y":197,"g":"sleeper","n":"张肇航","s":"2024-25","p":38.0},{"x":0.524,"y":190,"g":"other"},{"x":0.513,"y":183,"g":"other"},{"x":0.506,"y":198,"g":"other"},{"x":0.36,"y":199,"g":"other"},{"x":0.572,"y":183,"g":"other"},{"x":0.435,"y":192,"g":"other"},{"x":0.403,"y":181,"g":"other"},{"x":0.445,"y":177,"g":"other"},{"x":0.507,"y":195,"g":"other"},{"x":0.607,"y":196,"g":"other"},{"x":0.459,"y":190,"g":"other"},{"x":0.41,"y":188,"g":"other"},{"x":0.441,"y":193,"g":"other"},{"x":0.485,"y":183,"g":"other"},{"x":0.619,"y":195,"g":"other"},{"x":0.528,"y":190,"g":"sleeper","n":"谢智杰","s":"2024-25","p":32.1},{"x":0.428,"y":193,"g":"other"},{"x":0.607,"y":192,"g":"other"},{"x":0.491,"y":186,"g":"other"},{"x":0.579,"y":194,"g":"other"},{"x":0.411,"y":180,"g":"other"},{"x":0.512,"y":193,"g":"other"},{"x":0.55,"y":183,"g":"other"},{"x":0.503,"y":180,"g":"other"},{"x":0.407,"y":180,"g":"other"},{"x":0.347,"y":195,"g":"other"},{"x":0.083,"y":180,"g":"other"},{"x":0.467,"y":185,"g":"other"},{"x":0.54,"y":188,"g":"other"},{"x":0.597,"y":210,"g":"other"},{"x":0.431,"y":200,"g":"other"},{"x":0.506,"y":178,"g":"other"},{"x":0.437,"y":203,"g":"other"},{"x":0.603,"y":196,"g":"other"},{"x":0.615,"y":183,"g":"sleeper","n":"吴孟霖","s":"2024-25","p":24.7},{"x":0.579,"y":188,"g":"sleeper","n":"江龙","s":"2024-25","p":18.6},{"x":0.46,"y":184,"g":"other"},{"x":0.554,"y":183,"g":"other"},{"x":0.257,"y":192,"g":"other"},{"x":0.533,"y":185,"g":"other"},{"x":0.612,"y":190,"g":"sleeper","n":"申瑾文","s":"2024-25","p":39.3},{"x":0.474,"y":190,"g":"other"},{"x":0.403,"y":190,"g":"other"},{"x":0.5,"y":200,"g":"other"},{"x":0.559,"y":188,"g":"other"},{"x":0.466,"y":195,"g":"other"},{"x":0.4,"y":198,"g":"other"},{"x":0.312,"y":198,"g":"other"},{"x":0.623,"y":203,"g":"other"},{"x":0.418,"y":194,"g":"other"},{"x":0.504,"y":183,"g":"other"},{"x":0.536,"y":188,"g":"other"},{"x":0.535,"y":195,"g":"other"},{"x":0.489,"y":190,"g":"other"},{"x":0.524,"y":188,"g":"other"},{"x":0.479,"y":194,"g":"promoted","n":"刘翔龙","s":"2024-25","p":35.5},{"x":0.433,"y":180,"g":"other"},{"x":0.627,"y":180,"g":"other"},{"x":0.429,"y":181,"g":"other"},{"x":0.487,"y":181,"g":"other"},{"x":0.44,"y":180,"g":"other"},{"x":0.37,"y":193,"g":"other"},{"x":0.427,"y":200,"g":"other"},{"x":0.416,"y":192,"g":"other"},{"x":0.629,"y":202,"g":"other"},{"x":0.453,"y":190,"g":"other"},{"x":0.512,"y":182,"g":"other"},{"x":0.491,"y":183,"g":"other"},{"x":0.278,"y":180,"g":"other"},{"x":0.556,"y":180,"g":"other"},{"x":0.529,"y":195,"g":"other"},{"x":0.522,"y":180,"g":"other"},{"x":0.602,"y":188,"g":"sleeper","n":"张力强","s":"2024-25","p":34.9},{"x":0.485,"y":195,"g":"other"},{"x":0.619,"y":197,"g":"other"},{"x":0.577,"y":188,"g":"sleeper","n":"周靖博","s":"2024-25","p":20.9},{"x":0.457,"y":175,"g":"other"},{"x":0.267,"y":200,"g":"other"},{"x":0.537,"y":200,"g":"other"},{"x":0.358,"y":199,"g":"other"},{"x":0.525,"y":203,"g":"other"},{"x":0.289,"y":180,"g":"other"},{"x":0.364,"y":185,"g":"other"},{"x":0.345,"y":192,"g":"other"},{"x":0.561,"y":200,"g":"sleeper","n":"鲁逍遥","s":"2024-25","p":20.0},{"x":0.545,"y":203,"g":"other"},{"x":0.446,"y":187,"g":"other"},{"x":0.501,"y":174,"g":"other"},{"x":0.422,"y":198,"g":"other"},{"x":0.318,"y":185,"g":"other"},{"x":0.403,"y":182,"g":"other"},{"x":0.521,"y":189,"g":"other"},{"x":0.417,"y":180,"g":"other"},{"x":0.485,"y":180,"g":"other"},{"x":0.47,"y":187,"g":"other"},{"x":0.313,"y":189,"g":"other"},{"x":0.453,"y":190,"g":"other"},{"x":0.457,"y":190,"g":"other"},{"x":0.482,"y":190,"g":"other"},{"x":0.332,"y":178,"g":"other"},{"x":0.482,"y":188,"g":"other"},{"x":0.361,"y":185,"g":"other"},{"x":0.541,"y":198,"g":"other"},{"x":0.357,"y":182,"g":"other"},{"x":0.264,"y":180,"g":"other"},{"x":0.288,"y":198,"g":"other"},{"x":0.352,"y":183,"g":"other"},{"x":0.553,"y":200,"g":"other"},{"x":0.453,"y":188,"g":"other"},{"x":0.627,"y":196,"g":"other"},{"x":0.544,"y":183,"g":"other"},{"x":0.513,"y":188,"g":"other"},{"x":0.577,"y":183,"g":"other"},{"x":0.48,"y":198,"g":"other"},{"x":0.62,"y":183,"g":"other"},{"x":0.516,"y":178,"g":"other"},{"x":0.402,"y":178,"g":"other"},{"x":0.536,"y":196,"g":"other"},{"x":0.485,"y":198,"g":"other"},{"x":0.447,"y":190,"g":"other"},{"x":0.382,"y":192,"g":"other"},{"x":0.364,"y":186,"g":"other"},{"x":0.424,"y":191,"g":"other"},{"x":0.386,"y":185,"g":"other"},{"x":0.413,"y":188,"g":"other"},{"x":0.378,"y":190,"g":"other"},{"x":0.461,"y":193,"g":"other"},{"x":0.687,"y":191,"g":"other"},{"x":0.429,"y":195,"g":"other"},{"x":0.461,"y":190,"g":"other"},{"x":0.391,"y":200,"g":"other"},{"x":0.457,"y":182,"g":"other"},{"x":0.388,"y":188,"g":"other"},{"x":0.501,"y":196,"g":"sleeper","n":"曹晋昌","s":"2024-25","p":26.7},{"x":0.518,"y":192,"g":"other"},{"x":0.741,"y":199,"g":"sleeper","n":"高家云","s":"2024-25","p":24.8},{"x":0.701,"y":192,"g":"promoted","n":"杜智博","s":"2024-25","p":38.2},{"x":0.714,"y":204,"g":"other"},{"x":0.64,"y":201,"g":"other"},{"x":0.542,"y":186,"g":"sleeper","n":"李佳辉","s":"2024-25","p":28.5},{"x":0.414,"y":188,"g":"other"},{"x":0.521,"y":190,"g":"sleeper","n":"薛金昆","s":"2024-25","p":33.4},{"x":0.645,"y":196,"g":"sleeper","n":"赵玺羽","s":"2024-25","p":24.5},{"x":0.468,"y":198,"g":"other"},{"x":0.452,"y":197,"g":"other"},{"x":0.436,"y":181,"g":"other"},{"x":0.549,"y":205,"g":"other"},{"x":0.526,"y":205,"g":"other"},{"x":0.548,"y":185,"g":"other"},{"x":0.582,"y":180,"g":"other"},{"x":0.697,"y":197,"g":"sleeper","n":"刘冠男","s":"2024-25","p":33.4},{"x":0.505,"y":191,"g":"promoted","n":"吴泽昊","s":"2024-25","p":22.5},{"x":0.573,"y":196,"g":"promoted","n":"逄砚钧","s":"2024-25","p":23.4},{"x":0.594,"y":198,"g":"sleeper","n":"周睿亨","s":"2024-25","p":49.1},{"x":0.447,"y":178,"g":"other"},{"x":0.281,"y":175,"g":"other"},{"x":0.257,"y":198,"g":"other"},{"x":0.399,"y":187,"g":"other"},{"x":0.527,"y":195,"g":"other"},{"x":0.557,"y":205,"g":"other"},{"x":0.304,"y":193,"g":"other"},{"x":0.568,"y":196,"g":"other"},{"x":0.58,"y":179,"g":"other"},{"x":0.308,"y":178,"g":"other"},{"x":0.438,"y":178,"g":"other"},{"x":0.335,"y":175,"g":"other"},{"x":0.6,"y":193,"g":"other"},{"x":0.503,"y":188,"g":"other"},{"x":0.25,"y":190,"g":"other"},{"x":0.432,"y":178,"g":"other"},{"x":0.422,"y":188,"g":"other"},{"x":0.423,"y":193,"g":"other"},{"x":0.466,"y":185,"g":"other"},{"x":0.508,"y":190,"g":"other"},{"x":0.45,"y":183,"g":"other"},{"x":0.261,"y":180,"g":"other"},{"x":0.425,"y":180,"g":"other"},{"x":0.384,"y":190,"g":"other"},{"x":0.428,"y":181,"g":"other"},{"x":0.456,"y":185,"g":"other"},{"x":0.469,"y":180,"g":"other"},{"x":0.376,"y":184,"g":"other"},{"x":0.536,"y":198,"g":"other"},{"x":0.512,"y":195,"g":"other"},{"x":0.405,"y":190,"g":"other"},{"x":0.584,"y":188,"g":"sleeper","n":"许珑耀","s":"2024-25","p":45.5},{"x":0.357,"y":189,"g":"other"},{"x":0.388,"y":180,"g":"other"},{"x":0.664,"y":185,"g":"other"},{"x":0.421,"y":185,"g":"other"},{"x":0.34,"y":185,"g":"other"},{"x":0.392,"y":185,"g":"other"},{"x":0.523,"y":215,"g":"other"},{"x":0.427,"y":200,"g":"other"},{"x":0.561,"y":193,"g":"other"},{"x":0.495,"y":193,"g":"sleeper","n":"贾正浩","s":"2024-25","p":40.7},{"x":0.47,"y":185,"g":"other"},{"x":0.554,"y":192,"g":"other"},{"x":0.57,"y":198,"g":"other"},{"x":0.483,"y":198,"g":"other"},{"x":0.518,"y":192,"g":"other"},{"x":0.642,"y":205,"g":"other"},{"x":0.573,"y":194,"g":"promoted","n":"张高铭","s":"2024-25","p":25.4},{"x":0.285,"y":178,"g":"other"},{"x":0.375,"y":192,"g":"other"},{"x":0.457,"y":205,"g":"other"},{"x":0.444,"y":175,"g":"other"},{"x":0.35,"y":188,"g":"other"},{"x":0.655,"y":180,"g":"other"},{"x":0.507,"y":185,"g":"other"},{"x":0.668,"y":182,"g":"other"},{"x":0.45,"y":181,"g":"other"},{"x":0.409,"y":180,"g":"other"},{"x":0.57,"y":195,"g":"other"},{"x":0.543,"y":180,"g":"other"},{"x":0.56,"y":181,"g":"other"},{"x":0.492,"y":180,"g":"other"},{"x":0.481,"y":193,"g":"other"},{"x":0.442,"y":198,"g":"other"},{"x":0.462,"y":195,"g":"other"},{"x":0.502,"y":181,"g":"other"},{"x":0.443,"y":181,"g":"other"},{"x":0.506,"y":196,"g":"other"},{"x":0.49,"y":190,"g":"other"},{"x":0.51,"y":190,"g":"other"},{"x":0.576,"y":190,"g":"other"},{"x":0.399,"y":181,"g":"other"},{"x":0.508,"y":207,"g":"promoted","n":"杨曦皓","s":"2024-25","p":23.4},{"x":0.504,"y":182,"g":"promoted","n":"卢骏","s":"2024-25","p":39.4},{"x":0.534,"y":203,"g":"sleeper","n":"初昊阳","s":"2024-25","p":34.2},{"x":0.571,"y":205,"g":"promoted","n":"杨腾飞","s":"2024-25","p":30.7},{"x":0.509,"y":198,"g":"other"},{"x":0.482,"y":188,"g":"other"},{"x":0.522,"y":190,"g":"sleeper","n":"高铭泽","s":"2024-25","p":32.8},{"x":0.507,"y":196,"g":"other"},{"x":0.539,"y":216,"g":"other"},{"x":0.348,"y":197,"g":"other"},{"x":0.555,"y":199,"g":"sleeper","n":"陈子禛","s":"2024-25","p":33.2},{"x":0.508,"y":188,"g":"other"},{"x":0.506,"y":187,"g":"other"},{"x":0.494,"y":186,"g":"other"},{"x":0.501,"y":200,"g":"other"},{"x":0.363,"y":192,"g":"other"},{"x":0.768,"y":196,"g":"sleeper","n":"仝非拉","s":"2024-25","p":49.1},{"x":0.523,"y":195,"g":"other"},{"x":0.465,"y":190,"g":"other"},{"x":0.494,"y":196,"g":"other"},{"x":0.555,"y":205,"g":"sleeper","n":"郭浩雨","s":"2024-25","p":25.8},{"x":0.512,"y":198,"g":"other"},{"x":0.489,"y":195,"g":"other"},{"x":0.524,"y":175,"g":"other"},{"x":0.414,"y":187,"g":"other"},{"x":0.435,"y":183,"g":"other"},{"x":0.384,"y":195,"g":"other"},{"x":0.53,"y":186,"g":"other"},{"x":0.56,"y":203,"g":"sleeper","n":"胡睿","s":"2024-25","p":27.7},{"x":0.572,"y":183,"g":"sleeper","n":"祝子轩","s":"2024-25","p":22.5},{"x":0.383,"y":183,"g":"other"},{"x":0.456,"y":195,"g":"other"},{"x":0.445,"y":178,"g":"other"},{"x":0.403,"y":197,"g":"other"},{"x":0.56,"y":178,"g":"other"},{"x":0.394,"y":185,"g":"other"},{"x":0.562,"y":203,"g":"other"},{"x":0.541,"y":178,"g":"other"},{"x":0.556,"y":188,"g":"other"},{"x":0.463,"y":183,"g":"other"},{"x":0.545,"y":185,"g":"other"},{"x":0.625,"y":195,"g":"other"},{"x":0.592,"y":201,"g":"sleeper","n":"李昕哲","s":"2024-25","p":33.4},{"x":0.36,"y":194,"g":"other"},{"x":0.528,"y":191,"g":"other"},{"x":0.509,"y":198,"g":"other"},{"x":0.562,"y":185,"g":"other"},{"x":0.508,"y":195,"g":"other"},{"x":0.401,"y":190,"g":"other"},{"x":0.439,"y":199,"g":"promoted","n":"张力升","s":"2024-25","p":24.7},{"x":0.646,"y":206,"g":"other"},{"x":0.535,"y":188,"g":"other"},{"x":0.412,"y":188,"g":"other"},{"x":0.545,"y":198,"g":"other"},{"x":0.456,"y":200,"g":"other"},{"x":0.394,"y":195,"g":"other"},{"x":0.369,"y":186,"g":"other"},{"x":0.481,"y":180,"g":"promoted","n":"姜贺","s":"2024-25","p":17.7},{"x":0.571,"y":195,"g":"other"},{"x":0.415,"y":190,"g":"other"},{"x":0.434,"y":181,"g":"other"},{"x":0.379,"y":183,"g":"other"},{"x":0.605,"y":201,"g":"other"}],"medians":{"x":0.485,"y":190.0},"counts":{"promoted":24,"sleeper":49,"sleeper_plotted":47,"pool":704,"plotted":685,"no_plot":19},"xrange":[0.192,0.716],"yrange":[171,216]}</script>
+<script>
+(function(){
+  var D = JSON.parse(document.getElementById('dataset').textContent);
+  var svg = document.getElementById('plot');
+  var NS = 'http://www.w3.org/2000/svg';
+  var W = 980, H = 560;
+  var M = {top:46, right:30, bottom:66, left:64};
+  var plot = {l:M.left, r:W-M.right, t:M.top, b:H-M.bottom};
+  var pw = plot.r-plot.l, ph = plot.b-plot.t;
+
+  var xs = D.dots.map(function(p){return p.x;});
+  var ys = D.dots.map(function(p){return p.y;});
+  var xmin = Math.min.apply(null, xs.concat([D.xrange[0]]));
+  var xmax = Math.max.apply(null, xs.concat([D.xrange[1]]));
+  var ymin = Math.min.apply(null, ys.concat([D.yrange[0]]));
+  var ymax = Math.max.apply(null, ys.concat([D.yrange[1]]));
+  var xpad = (xmax-xmin)*0.05, ypad = (ymax-ymin)*0.07;
+  var xd = [xmin-xpad, xmax+xpad], yd = [ymin-ypad, ymax+ypad];
+  function X(v){ return plot.l + (v-xd[0])/(xd[1]-xd[0])*pw; }
+  function Y(v){ return plot.b - (v-yd[0])/(yd[1]-yd[0])*ph; }
+
+  function el(name, attrs, parent){
+    var e = document.createElementNS(NS, name);
+    for(var k in attrs) e.setAttribute(k, attrs[k]);
+    (parent||svg).appendChild(e);
+    return e;
+  }
+  function txt(x, y, s, cls, anchor, parent, fs){
+    var t = el('text', {x:x, y:y, 'class':cls, 'text-anchor':anchor||'start'}, parent);
+    if(fs) t.setAttribute('font-size', fs);
+    t.textContent = s;
+    return t;
+  }
+
+  var defs = el('defs', {});
+  var grad = el('radialGradient', {id:'wash', cx:'88%', cy:'10%', r:'95%'}, defs);
+  el('stop', {offset:'0%', 'stop-color':'#5e6ad2', 'stop-opacity':'0.085'}, grad);
+  el('stop', {offset:'55%', 'stop-color':'#5e6ad2', 'stop-opacity':'0.045'}, grad);
+  el('stop', {offset:'100%', 'stop-color':'#5e6ad2', 'stop-opacity':'0'}, grad);
+  var filt = el('filter', {id:'halo', x:'-250%', y:'-250%', width:'600%', height:'600%'}, defs);
+  el('feGaussianBlur', {'in':'SourceGraphic', stdDeviation:'2.8'}, filt);
+  var clip = el('clipPath', {id:'plotclip'}, defs);
+  el('rect', {x:plot.l, y:plot.t, width:pw, height:ph}, clip);
+
+  var mx = X(D.medians.x), my = Y(D.medians.y);
+  var washG = el('g', {'clip-path':'url(#plotclip)'});
+  el('rect', {x:mx, y:plot.t, width:plot.r-mx, height:my-plot.t, fill:'url(#wash)'}, washG);
+
+  var yticks = [170,180,190,200,210];
+  yticks.forEach(function(v){
+    el('line', {x1:plot.l, x2:plot.r, y1:Y(v), y2:Y(v),
+      stroke:'rgba(0,0,0,.05)', 'stroke-width':1});
+    txt(plot.l-10, Y(v)+3.5, String(v), 'ticktxt', 'end');
+  });
+  var xticks = [0.1,0.2,0.3,0.4,0.5,0.6,0.7];
+  xticks.forEach(function(v){
+    el('line', {x1:X(v), x2:X(v), y1:plot.b, y2:plot.b+5,
+      stroke:'rgba(0,0,0,.14)', 'stroke-width':1});
+    txt(X(v), plot.b+18, v.toFixed(1), 'ticktxt', 'middle');
+  });
+  el('line', {x1:plot.l, x2:plot.r, y1:plot.b, y2:plot.b,
+    stroke:'rgba(0,0,0,.16)', 'stroke-width':1});
+
+  txt((plot.l+plot.r)/2, plot.b+38, '得分效率', 'axistitle', 'middle');
+  txt(plot.r, plot.b+38, '更高效', 'axisend', 'end');
+  var ylab = txt(0, 0, '身高（厘米）', 'axistitle', 'middle');
+  ylab.setAttribute('transform', 'translate(17,' + ((plot.t+plot.b)/2) + ') rotate(-90)');
+  txt(plot.l-26, plot.t-14, '更高大', 'axisend', 'start');
+
+  txt(plot.r-12, plot.t+18, '历史升入CBA集中区', 'zonelbl', 'end');
+
+  var statG = el('g', {});
+  var sx = plot.l+22, sy = plot.t+14;
+  txt(sx, sy+30, '24', 'bignum', 'start', statG, '38px');
+  txt(sx+52, sy+30, '人升入 CBA', 'bigsub', 'start', statG);
+  txt(sx, sy+66, '47', 'bignum', 'start', statG, '25px');
+  txt(sx+38, sy+66, '遗珠在场', 'bigsub', 'start', statG);
+
+  var others = D.dots.filter(function(p){return p.g==='other';});
+  var sleepers = D.dots.filter(function(p){return p.g==='sleeper';});
+  var promoted = D.dots.filter(function(p){return p.g==='promoted';});
+
+  var gOther = el('g', {id:'gOther'});
+  others.forEach(function(p){
+    el('circle', {cx:X(p.x).toFixed(1), cy:Y(p.y).toFixed(1), r:3,
+      fill:'#d4d4d8', opacity:'.65'}, gOther);
+  });
+  var gSleep = el('g', {id:'gSleep'});
+  sleepers.forEach(function(p){
+    el('circle', {cx:X(p.x).toFixed(1), cy:Y(p.y).toFixed(1), r:4.5,
+      fill:'none', stroke:'#5e6ad2', 'stroke-width':1.4}, gSleep);
+  });
+  var gHalo = el('g', {id:'gHalo'});
+  promoted.forEach(function(p){
+    el('circle', {cx:X(p.x).toFixed(1), cy:Y(p.y).toFixed(1), r:7,
+      fill:'#5e6ad2', opacity:'.4', filter:'url(#halo)'}, gHalo);
+  });
+  var gProm = el('g', {id:'gProm'});
+  promoted.forEach(function(p){
+    el('circle', {cx:X(p.x).toFixed(1), cy:Y(p.y).toFixed(1), r:5.5,
+      fill:'#5e6ad2', stroke:'#fff', 'stroke-width':1}, gProm);
+  });
+
+  var blocked = [
+    {x:sx-8, y:sy-4, w:170, h:84},
+    {x:plot.r-150, y:plot.t+4, w:150, h:22}
+  ];
+  var dotRects = [];
+  promoted.concat(sleepers).forEach(function(p){
+    dotRects.push({x:X(p.x)-6.5, y:Y(p.y)-6.5, w:13, h:13});
+  });
+  function overlap(a,b){
+    return !(a.x+a.w < b.x || b.x+b.w < a.x || a.y+a.h < b.y || b.y+b.h < a.y);
+  }
+  function labelRect(px, py, c, w){
+    var lx, ly = py + c.dy;
+    if(c.a==='start') lx = px + c.dx;
+    else if(c.a==='end') lx = px + c.dx - w;
+    else lx = px + c.dx - w/2;
+    return {x:lx-2, y:ly-11, w:w+4, h:13, tx:(c.a==='end'? px+c.dx : (c.a==='middle'? px+c.dx : px+c.dx)), ty:ly};
+  }
+  var CAND = [
+    {dx:10,  dy:4,   a:'start'},
+    {dx:-10, dy:4,   a:'end'},
+    {dx:0,   dy:-11, a:'middle'},
+    {dx:0,   dy:19,  a:'middle'},
+    {dx:10,  dy:-7,  a:'start'},
+    {dx:-10, dy:-7,  a:'end'},
+    {dx:10,  dy:15,  a:'start'},
+    {dx:-10, dy:15,  a:'end'},
+    {dx:18,  dy:-15, a:'start', lead:1},
+    {dx:-18, dy:-15, a:'end',   lead:1},
+    {dx:19,  dy:13,  a:'start', lead:1},
+    {dx:-19, dy:13,  a:'end',   lead:1},
+    {dx:26,  dy:-25, a:'start', lead:1},
+    {dx:-26, dy:-25, a:'end',   lead:1},
+    {dx:27,  dy:24,  a:'start', lead:1},
+    {dx:-27, dy:24,  a:'end',   lead:1},
+    {dx:36,  dy:-36, a:'start', lead:1},
+    {dx:-36, dy:-36, a:'end',   lead:1},
+    {dx:38,  dy:34,  a:'start', lead:1},
+    {dx:-38, dy:34,  a:'end',   lead:1}
+  ];
+  var gLead = el('g', {id:'gLead'});
+  var gLbl = el('g', {id:'gLbl'});
+  var ordered = promoted.slice().sort(function(a,b){
+    return (Y(a.y)-X(a.x)) - (Y(b.y)-X(b.x));
+  });
+  ordered.forEach(function(p){
+    var px = X(p.x), py = Y(p.y);
+    var w = p.n.length*11 + 2;
+    var best = null, bestPen = 1e9, bestC = null;
+    for(var i=0;i<CAND.length;i++){
+      var c = CAND[i];
+      var r = labelRect(px, py, c, w);
+      if(r.x < plot.l-44 || r.x+r.w > plot.r+24 || r.y < plot.t-4 || r.y+r.h > plot.b-2) continue;
+      var pen = i*0.5;
+      for(var j=0;j<blocked.length;j++) if(overlap(r, blocked[j])) pen += 100;
+      for(var k=0;k<dotRects.length;k++) if(overlap(r, dotRects[k])) pen += 14;
+      if(pen < bestPen){ bestPen = pen; best = r; bestC = c; }
+      if(pen === i*0.5 && pen < 4) break;
+    }
+    if(!best){ bestC = CAND[0]; best = labelRect(px, py, bestC, w); }
+    blocked.push(best);
+    var t = el('text', {x:best.tx, y:best.ty, 'class':'plbl',
+      'text-anchor':bestC.a}, gLbl);
+    t.textContent = p.n;
+    var far = Math.abs(bestC.dx) + Math.abs(bestC.dy);
+    if(bestC.lead || far > 30){
+      var ax = (bestC.a==='end') ? best.x+best.w-2 : (bestC.a==='middle' ? best.tx : best.x+2);
+      var ay = best.ty - 4;
+      var ddx = ax-px, ddy = ay-py;
+      var dl = Math.sqrt(ddx*ddx+ddy*ddy);
+      if(dl > 12){
+        var ux = ddx/dl, uy = ddy/dl;
+        el('line', {x1:(px+ux*7).toFixed(1), y1:(py+uy*7).toFixed(1),
+          x2:(ax-ux*3).toFixed(1), y2:(ay-uy*3).toFixed(1),
+          stroke:'rgba(94,106,210,.45)', 'stroke-width':0.8}, gLead);
+      }
+    }
+  });
+})();
+</script>
+
+<script>
+(function(){
+  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reduce) return;
+  function fadeGroup(id, delay, dur){
+    var g = document.getElementById(id);
+    if(!g) return;
+    g.style.opacity = '0';
+    g.style.transition = 'opacity ' + dur + 'ms ease';
+    setTimeout(function(){ g.style.opacity = '1'; }, delay);
+  }
+  fadeGroup('gOther', 60, 480);
+  fadeGroup('gSleep', 420, 420);
+  fadeGroup('gLead', 1750, 420);
+  fadeGroup('gLbl', 1750, 420);
+  var prom = document.querySelectorAll('#gProm circle');
+  var halo = document.querySelectorAll('#gHalo circle');
+  var idx = [];
+  for(var i=0;i<prom.length;i++) idx.push(i);
+  idx.sort(function(a,b){
+    return parseFloat(prom[a].getAttribute('cx')) - parseFloat(prom[b].getAttribute('cx'));
+  });
+  idx.forEach(function(i, rank){
+    var delay = 600 + rank*45;
+    [prom[i], halo[i]].forEach(function(c){
+      if(!c) return;
+      c.style.opacity = '0';
+      c.style.transition = 'opacity 300ms ease';
+      setTimeout(function(){ c.style.opacity = ''; c.style.removeProperty('opacity'); }, delay);
+    });
+  });
+})();
+</script>
+
+<script>
+(function(){
+  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var nums = document.querySelectorAll('.bignum');
+  if(!nums.length) return;
+  if(reduce) return;
+  function ease(t){ return 1 - Math.pow(1-t, 3); }
+  function run(node, target, dur, delay){
+    node.textContent = '0';
+    var t0 = null;
+    function step(ts){
+      if(t0 === null) t0 = ts;
+      var p = Math.min(1, (ts - t0) / dur);
+      node.textContent = String(Math.round(ease(p) * target));
+      if(p < 1) requestAnimationFrame(step);
+    }
+    setTimeout(function(){ requestAnimationFrame(step); }, delay);
+  }
+  run(nums[0], 24, 1100, 600);
+  run(nums[1], 47, 1100, 820);
+})();
+</script>
+</body>
+</html>
