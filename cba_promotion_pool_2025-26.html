@@ -2,21 +2,24 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<title>升入CBA分析：从大学联赛到 CBA</title>
+<meta name="viewport" content="width=1280">
+<title>Reee 球员评估 — 升入 CBA 分析</title>
 <style>
+/* ── 散点图样式 ── */
+
   :root{
     --surface:#fff;
     --border:rgba(0,0,0,.06);
     --text:#18181b;
     --muted:#44444a;
     --faint:#8e8e95;
-    --accent:#5e6ad2;
+    --accent:#d97757;
   }
   *{margin:0;padding:0;box-sizing:border-box;}
-  html{background:#fafafa;}
+  html{background:#ffffff;}
   body{
-    width:1280px;margin:0 auto;
-    background:#fafafa;color:var(--text);
+    max-width:1280px;margin:0 auto;
+    background:#ffffff;color:var(--text);
     font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;
     font-variant-numeric:tabular-nums;
     -webkit-font-smoothing:antialiased;
@@ -42,8 +45,8 @@
   .chip{
     display:inline-flex;align-items:center;gap:7px;
     font-size:12px;font-weight:500;color:var(--accent);
-    background:rgba(94,106,210,.07);
-    border:1px solid rgba(94,106,210,.38);
+    background:rgba(217,119,87,.07);
+    border:1px solid rgba(217,119,87,.38);
     border-radius:999px;padding:5px 13px 5px 11px;line-height:1;
     user-select:none;
   }
@@ -62,7 +65,7 @@
     flex:none;background:var(--accent);color:#fff;
     font-size:14px;font-weight:550;letter-spacing:.04em;
     padding:11px 26px;border-radius:10px;
-    box-shadow:0 2px 6px rgba(94,106,210,.32),0 8px 20px rgba(94,106,210,.18);
+    box-shadow:0 2px 6px rgba(217,119,87,.32),0 8px 20px rgba(217,119,87,.18);
     cursor:default;
   }
   text{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;}
@@ -75,20 +78,274 @@
     paint-order:stroke;stroke:rgba(255,255,255,.93);stroke-width:3px;
     stroke-linejoin:round;
   }
-  .zonelbl{font-size:10px;fill:rgba(94,106,210,.62);letter-spacing:.14em;font-weight:500;}
+  .zonelbl{font-size:10px;fill:rgba(217,119,87,.62);letter-spacing:.14em;font-weight:500;}
   .bignum{font-weight:650;fill:var(--accent);font-variant-numeric:tabular-nums;}
   .bigsub{font-size:11px;fill:var(--muted);}
+
+/* ── K线叙事样式 ── */
+
+:root{
+  --paper:#ffffff; --paper-2:#f8f8f8; --ink:#141413; --ink-2:#3d3d3a;
+  --muted:#5e5d59; --faint:#87867f; --line:#d1cfc5; --black:#141413;
+  --clay:#d97757; --clay-deep:#c6613f;
+  --serif:"Iowan Old Style","Charter","Source Han Serif SC","Songti SC",Georgia,"Times New Roman",serif;
+  --sans:ui-sans-serif,"Helvetica Neue","PingFang SC","Microsoft YaHei",Arial,sans-serif;
+  --mono:ui-monospace,"SF Mono","Cascadia Mono",Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+.nomotion *{transition:none!important;animation:none!important}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--ink);font-family:var(--serif);
+  font-size:18px;line-height:1.75;-webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;font-feature-settings:"kern";}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+.wrap{max-width:1080px;margin:0 auto;padding:0 32px}
+.kicker{font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--faint)}
+h1,h2,h3{font-family:var(--sans);font-weight:600;letter-spacing:-.02em;line-height:1.1}
+
+.rv{transition:opacity .7s cubic-bezier(.45,0,.55,1),transform .7s cubic-bezier(.45,0,.55,1)}
+.js .rv{opacity:0;transform:translateY(16px)}
+.js .rv.in{opacity:1;transform:none}
+.rv.d1{transition-delay:.08s}.rv.d2{transition-delay:.16s}.rv.d3{transition-delay:.24s}.rv.d4{transition-delay:.32s}
+
+.hero{min-height:88vh;display:flex;flex-direction:column;justify-content:center;padding:80px 0}
+.hero h1{font-size:clamp(40px,6vw,72px);margin:18px 0 22px;max-width:18ch}
+.hero .dek{font-size:21px;color:var(--ink-2);max-width:62ch}
+.stats{display:flex;gap:0;margin-top:54px;border-top:1px solid var(--line)}
+.stat{flex:1;padding:22px 26px 0 0}
+.stat .lab{font-family:var(--sans);font-size:13px;color:var(--muted)}
+.stat .big{font-family:var(--mono);font-size:clamp(34px,5vw,52px);color:var(--ink);font-variant-numeric:tabular-nums;margin-top:6px}
+.stat .unit{font-family:var(--sans);font-size:14px;color:var(--faint);margin-left:6px}
+
+.sec{padding:96px 0}
+.sec .kicker{margin-bottom:14px}
+.sec h2{font-size:clamp(28px,3.6vw,42px);max-width:20ch}
+.sec .lead{font-size:19px;color:var(--ink-2);max-width:60ch;margin-top:18px}
+.band{background:var(--black);color:var(--paper)}
+.band h2{color:var(--paper)}.band .lead{color:#cfcdc5}
+.band .kicker{color:#9a988f}
+
+/* act 1: rotation rule + facts */
+.rot{display:grid;grid-template-columns:.9fr 1.1fr;gap:48px;align-items:center;margin-top:40px}
+.rot svg{width:100%;max-width:380px}
+.rot-cap{font-family:var(--sans);font-size:13px;color:var(--muted);margin-top:10px}
+.facts{display:flex;flex-direction:column;gap:0;border-top:1px solid var(--line)}
+.fact{padding:20px 0;border-bottom:1px solid var(--line)}
+.fact b{font-family:var(--mono);font-size:30px;color:var(--ink);display:block;margin-bottom:4px}
+.fact span{color:var(--ink-2);font-size:16px}
+.fact .tag{font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--faint);display:block;margin-top:6px;text-transform:uppercase}
+
+/* act 2 scrolly */
+.scrolly{position:relative;display:grid;grid-template-columns:1.05fr .95fr;gap:0}
+.graphic{position:sticky;top:0;height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.graphic svg{width:min(44vw,520px);height:min(44vw,520px);overflow:visible}
+.steps{padding:16vh 0}
+.step{min-height:76vh;display:flex;align-items:center}
+.step-card{background:rgba(255,255,255,.90);border:1px solid var(--line);border-radius:16px;padding:26px 28px;backdrop-filter:blur(3px)}
+.step h3{font-size:24px;margin-bottom:10px}
+.step p{font-size:18px;color:var(--ink-2)}
+
+#anatomy .an-g{opacity:0;transition:opacity .7s cubic-bezier(.45,0,.55,1)}
+#anatomy[data-s="0"] .an-g0{opacity:1}
+#anatomy[data-s="1"] .an-g1{opacity:1}
+#anatomy[data-s="1"] .an-g0{opacity:.95}
+.an-cap{transition:opacity .5s}
+#anatomy[data-s="1"] .an-g0 .an-cap{opacity:0}
+#anatomy[data-s="2"] .an-g2{opacity:1}
+#anatomy[data-s="3"] .an-g3{opacity:1}
+.an-ev{transition:transform 1.1s cubic-bezier(.45,0,.55,1),opacity .8s}
+#anatomy[data-s="1"] .an-ev{transform:translate(var(--tx),var(--ty));opacity:0}
+#anatomy[data-s="2"] .an-ev,#anatomy[data-s="3"] .an-ev{transform:translate(var(--tx),var(--ty));opacity:0}
+.an-evt{font-size:2.6px;fill:var(--muted);font-family:var(--sans)}
+.an-at{font-size:3px;fill:var(--ink-2);font-family:var(--sans);text-anchor:middle}
+.an-cap{font-size:3.4px;fill:var(--muted);font-family:var(--sans);text-anchor:middle}
+.an-note{font-size:3.2px;fill:var(--ink-2);font-family:var(--serif)}
+.an-hit{transform-box:fill-box;transform-origin:center;transform:scale(0);transition:transform .8s cubic-bezier(.45,0,.55,1) .5s}
+#anatomy[data-s="1"] .an-hit{transform:scale(1)}
+.an-candle,.an-candle-w{transform-box:fill-box;transform-origin:bottom;transform:scaleY(0);transition:transform .9s cubic-bezier(.45,0,.55,1)}
+#anatomy[data-s="2"] .an-candle,#anatomy[data-s="2"] .an-candle-w{transform:scaleY(1)}
+.an-mini{transform-box:fill-box;transform-origin:bottom;transform:scaleY(0);transition:transform .7s cubic-bezier(.45,0,.55,1) var(--d,0s)}
+#anatomy[data-s="3"] .an-mini{transform:scaleY(1)}
+/* an-mix：当场算出一个归属——混色点(含双色)聚拢→分开 */
+.an-mix .an-md{transition:transform .9s cubic-bezier(.45,0,.55,1) var(--d,0s)}
+#anatomy .an-mix .an-md{transform:translate(var(--bx),var(--by))}
+#anatomy[data-s="1"] .an-mix .an-md{transform:none}
+/* 分开后，8 档锚点环 + 命中延后浮现（保留原效果）*/
+#anatomy .an-anchor{opacity:0;transition:opacity .55s}
+#anatomy[data-s="1"] .an-anchor{opacity:1;transition-delay:1.05s}
+#anatomy .an-hit{transition:transform .7s cubic-bezier(.45,0,.55,1) 1.15s}
+#anatomy .kwm{font-size:3.2px}
+
+/* act 3 k-line */
+.kfig{margin-top:46px}
+.ksvg{width:100%;height:auto}
+.kwm{font-family:var(--mono);font-size:11px;fill:var(--faint);text-anchor:end;letter-spacing:.1em}
+.kbase{stroke:var(--line);stroke-width:1}
+.kax{font-family:var(--sans);font-size:11px;fill:var(--faint);text-anchor:end}
+.kxl{font-family:var(--mono);font-size:11px;fill:var(--faint);text-anchor:middle}
+.ksea{stroke:var(--line);stroke-width:1;stroke-dasharray:4 4}
+.kseat{font-family:var(--sans);font-size:12px;fill:var(--muted)}
+.kthr{stroke:var(--clay);stroke-width:1.2}
+.kthrt{font-family:var(--sans);font-size:12.5px;fill:var(--clay-deep);text-anchor:middle;font-weight:600}
+.kthrt2{font-family:var(--sans);font-size:11px;fill:var(--muted);text-anchor:middle}
+.kturnp{fill:var(--clay)}
+.kturnt{font-family:var(--sans);font-size:12.5px;fill:var(--clay-deep);text-anchor:middle;font-weight:600}
+.kturnt2{font-family:var(--sans);font-size:11px;fill:var(--muted);text-anchor:middle}
+.kdip{font-family:var(--serif);font-size:12px;fill:var(--muted);text-anchor:middle}
+.kcap{font-family:var(--sans);font-size:13.5px;color:var(--muted);max-width:78ch;margin-top:14px;line-height:1.7}
+.kc{transform-box:fill-box;transform-origin:bottom;transition:transform .55s cubic-bezier(.45,0,.55,1) var(--d,0s),opacity .55s var(--d,0s)}
+.js .kfig:not(.in) .kc{transform:scaleY(0)}
+.kfig.in .kc{transform:scaleY(1)}
+.kdim{opacity:.5}
+.kwick{stroke-width:1.6}
+.kbody{stroke-width:1.4}
+.kbar{stroke-width:1.3}
+.kseg{opacity:.13}
+.kdot{transform-box:fill-box;transform-origin:center;transition:transform .5s cubic-bezier(.45,0,.55,1) var(--d,0s)}
+.js .kfig:not(.in) .kdot{transform:scale(0)}
+.kfig.in .kdot{transform:scale(1)}
+.kpline{fill:none;stroke:var(--ink-2);stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round}
+.js .kfig:not(.in) .kpline{stroke-dasharray:2000;stroke-dashoffset:2000}
+.kfig.in .kpline{stroke-dasharray:2000;stroke-dashoffset:0;transition:stroke-dashoffset 2.2s cubic-bezier(.45,0,.55,1) .2s}
+.kstrip{transition:opacity .8s .9s}
+.js .kfig:not(.in) .kstrip{opacity:0}
+.kfig.in .kstrip{opacity:1}
+.klegend{display:flex;flex-wrap:wrap;gap:8px 16px;margin-top:6px}
+.lg{font-family:var(--sans);font-size:13px;color:var(--muted);display:inline-flex;align-items:center}
+.lg i{width:9px;height:9px;border-radius:50%;display:inline-block;margin-right:6px}
+
+/* act 4 flows (dark band) */
+.flows{margin-top:44px;display:flex;flex-direction:column}
+.fl-row{display:grid;grid-template-columns:350px 1fr 70px;gap:18px;align-items:center;padding:13px 0;border-bottom:1px solid rgba(255,255,255,.10)}
+.fl-pair{font-family:var(--sans);font-size:14.5px;color:#ece9e0;display:flex;align-items:center;gap:7px}
+.fl-pair i{width:10px;height:10px;border-radius:50%;flex:none}
+.fl-ar{width:20px;height:9px;color:#7c7a71;flex:none}
+.fl-track{position:relative;height:10px}
+.fl-bar{position:absolute;left:0;top:1px;height:8px;width:var(--w);border-radius:999px;background:var(--c);transition:width 1.05s cubic-bezier(.45,0,.55,1)}
+.js .fl-bar{width:0}
+.js .in .fl-bar{width:var(--w)}
+.fl-n{font-size:14px;color:var(--clay);text-align:right}
+.fl-note{margin-top:18px;font-family:var(--sans);font-size:14px;color:#9a988f;max-width:70ch}
+.cases{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:40px}
+.cs-card{background:#1d1d1b;border:1px solid #34332f;border-radius:16px;padding:20px 22px}
+.cs-head{display:flex;justify-content:space-between;align-items:baseline}
+.cs-head b{font-family:var(--serif);font-size:22px;color:var(--paper)}
+.cs-tag{font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:#9a988f}
+.cs-svg{width:100%;height:auto;margin:10px 0 2px}
+.cs-sea{font-size:4.4px;fill:#9a988f;text-anchor:middle;font-family:var(--mono)}
+.cs-seq{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 10px}
+.cs-chip{font-family:var(--sans);font-size:12.5px;color:#cfcdc5;display:inline-flex;align-items:center;border:1px solid #3a3935;border-radius:999px;padding:3px 10px}
+.cs-chip i{width:8px;height:8px;border-radius:50%;margin-right:6px}
+.cs-card p{font-size:15px;color:#b7b5ac;line-height:1.7}
+
+/* act 5 player page mock + tiers */
+.pp{display:grid;grid-template-columns:1.05fr .95fr;gap:48px;margin-top:46px;align-items:start}
+.pp-card{position:relative;background:#fff;border:1px solid var(--line);border-radius:20px;padding:26px;box-shadow:0 1px 2px rgba(20,20,19,.04)}
+.pp-wm{position:absolute;right:18px;top:16px;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;color:var(--faint)}
+.pp-head{display:flex;gap:14px;align-items:center}
+.pp-ava{width:52px;height:52px;border-radius:50%;background:var(--paper-2);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:24px;color:var(--ink-2);flex:none}
+.pp-name{font-family:var(--sans);font-weight:600;font-size:21px}
+.pp-meta{font-size:12px;color:var(--muted);margin-top:3px}
+.pp-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.pp-chip{display:inline-flex;align-items:center;font-family:var(--sans);font-size:14px;border:1px solid var(--line);border-radius:999px;padding:7px 14px;color:var(--ink-2);background:var(--paper)}
+.pp-chip i{width:10px;height:10px;border-radius:50%;margin-right:8px}
+.pp-chip b{font-weight:600;margin-left:6px}
+.pp-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:18px 0 4px;border-top:1px solid var(--line)}
+.pp-stats div{padding-top:12px}
+.pp-stats b{font-size:26px;display:block}
+.pp-stats span{font-family:var(--sans);font-size:12px;color:var(--muted)}
+.pp-sec{font-family:var(--sans);font-size:13px;color:var(--muted);margin:18px 0 8px;border-top:1px solid var(--line);padding-top:14px}
+.pp-src{font-family:var(--mono);font-size:10.5px;color:var(--faint);margin-left:8px;letter-spacing:.06em}
+.pp-sim{display:flex;align-items:center;gap:8px;font-size:15px;padding:5px 0}
+.pp-sim i{width:9px;height:9px;border-radius:50%;flex:none}
+.pp-sim b{font-family:var(--serif);font-weight:600}
+.pp-sim span{font-family:var(--sans);font-size:12.5px;color:var(--muted)}
+.pp-gap{display:grid;grid-template-columns:80px 1fr 56px;gap:10px;align-items:center;font-family:var(--sans);font-size:13px;color:var(--ink-2);padding:4px 0}
+.pp-track{position:relative;height:8px;background:var(--paper-2);border-radius:999px;overflow:hidden}
+.pp-track span{position:absolute;left:0;top:0;bottom:0;width:var(--w);background:var(--clay);border-radius:999px}
+.pp-gap .num{font-size:12px;color:var(--muted);text-align:right}
+.tiers{display:flex;flex-direction:column;gap:0;border-top:1px solid var(--line)}
+.tier{padding:20px 0;border-bottom:1px solid var(--line)}
+.tier-min{font-size:13px;color:var(--clay-deep);letter-spacing:.02em}
+.tier-name{font-family:var(--sans);font-weight:600;font-size:20px;margin:6px 0 6px}
+.tier p{font-size:15.5px;color:var(--ink-2)}
+.close{padding:88px 0 96px}
+.close p{font-size:clamp(22px,2.8vw,30px);line-height:1.6;max-width:34ch;font-family:var(--serif);color:var(--ink)}
+.close .kicker{margin-bottom:16px}
+
+/* act 5: upward path */
+.sec.alt{background:var(--paper-2)}
+.bridge{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:14px;align-items:end;margin-top:54px}
+.br-step{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:20px 22px 18px;margin-bottom:var(--lift)}
+.br-tier{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint)}
+.br-name{font-family:var(--sans);font-weight:600;font-size:20px;margin-top:8px;letter-spacing:-.01em}
+.br-stat{font-family:var(--sans);font-size:13.5px;color:var(--muted);margin-top:6px;line-height:1.6}
+.br-link{align-self:center;display:flex;flex-direction:column;align-items:center;gap:6px;padding-bottom:26px}
+.br-link span{font-family:var(--mono);font-size:11px;letter-spacing:.08em;color:var(--clay-deep);white-space:nowrap}
+.br-link::before{content:"";width:1px;height:30px;background:var(--line)}
+.upd-block{margin-top:64px}
+.upd-h{font-family:var(--sans);font-weight:600;font-size:22px;letter-spacing:-.01em}
+.upd-lead{font-size:16.5px;color:var(--ink-2);max-width:62ch;margin-top:10px;line-height:1.75}
+.updumb{margin-top:30px;display:flex;flex-direction:column}
+.ud-row{display:grid;grid-template-columns:110px 1fr 215px;gap:18px;align-items:center;padding:13px 0;border-bottom:1px solid var(--line)}
+.ud-feat{font-family:var(--sans);font-size:15.5px;color:var(--ink-2)}
+.ud-track{position:relative;height:14px}
+.ud-mid{position:absolute;left:50%;top:-4px;bottom:-4px;width:1px;background:var(--line)}
+.ud-bar{position:absolute;top:3px;height:8px;width:var(--w);border-radius:999px;transition:width 1.05s cubic-bezier(.45,0,.55,1)}
+.ud-pos{left:50%;background:var(--clay)}
+.ud-neg{right:50%;background:var(--faint)}
+.js .updumb .ud-bar{width:0}
+.js .updumb.in .ud-bar{width:var(--w)}
+.ud-row:nth-child(2) .ud-bar{transition-delay:.06s}.ud-row:nth-child(3) .ud-bar{transition-delay:.12s}
+.ud-row:nth-child(4) .ud-bar{transition-delay:.18s}
+.ud-read{font-family:var(--sans);font-size:13.5px;color:var(--muted);text-align:right}
+.ud-read b{color:var(--clay-deep);font-weight:600}
+.ud-read i{display:block;font-style:normal;font-size:12px;color:var(--faint);margin-top:1px}
+.upd-note{font-family:var(--sans);font-size:13.5px;color:var(--muted);max-width:78ch;margin-top:18px;line-height:1.75}
+.upd-note a{color:var(--clay-deep)}
+
+.method{background:var(--black);color:#cfcdc5;padding:64px 0}
+.method h2{color:var(--paper);font-size:24px;margin-bottom:18px}
+.method p{font-family:var(--sans);font-size:14px;line-height:1.85;max-width:74ch;color:#b7b5ac;margin-bottom:10px}
+.method .mono{font-family:var(--mono);color:#e8e6dc}
+.method .prov{margin-top:14px;font-size:12px;color:#86857d}
+
+@media(max-width:880px){
+  .scrolly{grid-template-columns:1fr}
+  .graphic{height:58vh}
+  .steps{padding:2vh 0}
+  .step{min-height:58vh}
+  .stats{flex-direction:column}.stat{padding:18px 0;border-bottom:1px solid var(--line)}
+  .rot{grid-template-columns:1fr}
+  .pp{grid-template-columns:1fr}
+  .cases{grid-template-columns:1fr}
+  .fl-row{grid-template-columns:1fr;gap:8px}
+  .fl-n{text-align:left}
+  .bridge{grid-template-columns:1fr}
+  .br-step{margin-bottom:0}
+  .br-link{padding:0;flex-direction:row}
+  .br-link::before{width:30px;height:1px}
+  .ud-row{grid-template-columns:84px 1fr;gap:10px}.ud-read{grid-column:1/-1;text-align:left}
+}
+@media(prefers-reduced-motion:reduce){
+  .rv,.kc,.kdot,.kpline,.an-ev,.an-hit,.an-candle,.an-candle-w,.an-mini,.fl-bar,.ud-bar{transition:none!important}
+}
+
+
 </style>
+<script>document.documentElement.classList.add('js')</script>
 </head>
 <body>
+
+<!-- ═══ 散点图区域 ═══ -->
 <div class="page">
   <div class="eyebrow">赛事观察</div>
-  <h1>升入CBA分析：从大学联赛到 CBA</h1>
+  <h1>从大学联赛到 CBA</h1>
   <p class="sub">CUBA 历史训练池 704 人，其中 24 人后来升入 CBA。</p>
 
   <div class="card">
     <div class="chips">
-      <span class="chip"><span class="mark solid"></span>升入CBA者 <span class="num">24</span></span>
+      <span class="chip"><span class="mark solid"></span>升入 CBA <span class="num">24</span></span>
       <span class="chip"><span class="mark hollow"></span>遗珠 <span class="num">47</span></span>
     </div>
     <svg id="plot" viewBox="0 0 980 560" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="得分效率与身高散点图"></svg>
@@ -133,9 +390,9 @@
 
   var defs = el('defs', {});
   var grad = el('radialGradient', {id:'wash', cx:'88%', cy:'10%', r:'95%'}, defs);
-  el('stop', {offset:'0%', 'stop-color':'#5e6ad2', 'stop-opacity':'0.085'}, grad);
-  el('stop', {offset:'55%', 'stop-color':'#5e6ad2', 'stop-opacity':'0.045'}, grad);
-  el('stop', {offset:'100%', 'stop-color':'#5e6ad2', 'stop-opacity':'0'}, grad);
+  el('stop', {offset:'0%', 'stop-color':'#d97757', 'stop-opacity':'0.085'}, grad);
+  el('stop', {offset:'55%', 'stop-color':'#d97757', 'stop-opacity':'0.045'}, grad);
+  el('stop', {offset:'100%', 'stop-color':'#d97757', 'stop-opacity':'0'}, grad);
   var filt = el('filter', {id:'halo', x:'-250%', y:'-250%', width:'600%', height:'600%'}, defs);
   el('feGaussianBlur', {'in':'SourceGraphic', stdDeviation:'2.8'}, filt);
   var clip = el('clipPath', {id:'plotclip'}, defs);
@@ -166,7 +423,7 @@
   ylab.setAttribute('transform', 'translate(17,' + ((plot.t+plot.b)/2) + ') rotate(-90)');
   txt(plot.l-26, plot.t-14, '更高大', 'axisend', 'start');
 
-  txt(plot.r-12, plot.t+18, '历史升入CBA集中区', 'zonelbl', 'end');
+  txt(plot.r-12, plot.t+18, '历史升入 CBA 集中区', 'zonelbl', 'end');
 
   var statG = el('g', {});
   var sx = plot.l+22, sy = plot.t+14;
@@ -187,17 +444,17 @@
   var gSleep = el('g', {id:'gSleep'});
   sleepers.forEach(function(p){
     el('circle', {cx:X(p.x).toFixed(1), cy:Y(p.y).toFixed(1), r:4.5,
-      fill:'none', stroke:'#5e6ad2', 'stroke-width':1.4}, gSleep);
+      fill:'none', stroke:'#d97757', 'stroke-width':1.4}, gSleep);
   });
   var gHalo = el('g', {id:'gHalo'});
   promoted.forEach(function(p){
     el('circle', {cx:X(p.x).toFixed(1), cy:Y(p.y).toFixed(1), r:7,
-      fill:'#5e6ad2', opacity:'.4', filter:'url(#halo)'}, gHalo);
+      fill:'#d97757', opacity:'.4', filter:'url(#halo)'}, gHalo);
   });
   var gProm = el('g', {id:'gProm'});
   promoted.forEach(function(p){
     el('circle', {cx:X(p.x).toFixed(1), cy:Y(p.y).toFixed(1), r:5.5,
-      fill:'#5e6ad2', stroke:'#fff', 'stroke-width':1}, gProm);
+      fill:'#d97757', stroke:'#fff', 'stroke-width':1}, gProm);
   });
 
   var blocked = [
@@ -274,7 +531,7 @@
         var ux = ddx/dl, uy = ddy/dl;
         el('line', {x1:(px+ux*7).toFixed(1), y1:(py+uy*7).toFixed(1),
           x2:(ax-ux*3).toFixed(1), y2:(ay-uy*3).toFixed(1),
-          stroke:'rgba(94,106,210,.45)', 'stroke-width':0.8}, gLead);
+          stroke:'rgba(217,119,87,.45)', 'stroke-width':0.8}, gLead);
       }
     }
   });
@@ -337,5 +594,311 @@
   run(nums[1], 47, 1100, 820);
 })();
 </script>
+
+<!-- ═══ K线叙事区域 ═══ -->
+<section class="sec">
+  <div class="wrap">
+   <div class="rv">
+    <div class="kicker">01　赛场的现实</div>
+    <h2>十几分钟，看不全一名球员</h2>
+    <p class="lead">一名教练带二十名青少年球员，一场比赛每人摊十几分钟。赛季结束，说得出口的只有场均得分；这一年球员是怎么成长的，答不上来。家庭在青少年培养上的投入越来越重，评价球员的工具，却还停留在肉眼和口碑。</p>
+   </div>
+   <div class="rot">
+     <div class="rv d1"><svg viewBox="0 0 200 100" aria-label="第一节与第二节分别派出两组五人">
+  <rect x="6" y="10" width="88" height="58" rx="6" fill="none" stroke="var(--line)"/>
+  <rect x="106" y="10" width="88" height="58" rx="6" fill="none" stroke="var(--line)"/>
+  <text x="50" y="84" text-anchor="middle" style="font:11px var(--sans);fill:var(--muted)">第一节　这五人</text>
+  <text x="150" y="84" text-anchor="middle" style="font:11px var(--sans);fill:var(--muted)">第二节　另五人</text>
+  <circle cx="50" cy="22" r="4.2" fill="var(--ink-2)"/><circle cx="39" cy="38" r="4.2" fill="var(--ink-2)"/><circle cx="61" cy="38" r="4.2" fill="var(--ink-2)"/><circle cx="44" cy="56" r="4.2" fill="var(--ink-2)"/><circle cx="56" cy="56" r="4.2" fill="var(--ink-2)"/>
+  <circle cx="150" cy="22" r="4.2" fill="#a8a59a"/><circle cx="139" cy="38" r="4.2" fill="#a8a59a"/><circle cx="161" cy="38" r="4.2" fill="#a8a59a"/><circle cx="144" cy="56" r="4.2" fill="#a8a59a"/><circle cx="156" cy="56" r="4.2" fill="#a8a59a"/>
+</svg><div class="rot-cap">不少青少年赛事要求第一节与第二节分别派出两组五人，单人上场时间被规则切碎。</div></div>
+     <div class="facts">
+       <div class="fact rv d1"><b class="num">17 分钟</b><span>在轮换规则下，场均十七分钟已经算多。</span><span class="tag">赛事观察</span></div>
+       <div class="fact rv d2"><b class="num">半数球员</b><span>部分省级比赛里，场均上场不到十五分钟的球员约占一半。</span><span class="tag">赛事观察</span></div>
+       <div class="fact rv d3"><b class="num">一年之间</b><span>前一年场均五分钟，第二年打满全场，这样的跳变并不少见。</span><span class="tag">赛事观察</span></div>
+     </div>
+   </div>
+  </div>
+</section>
+
+<section class="sec alt">
+  <div class="wrap">
+   <div class="rv">
+    <div class="kicker">02　Reee 球员评估模型</div>
+    
+    
+   </div>
+   <div class="bridge"><div class="br-step rv d1" style="--lift:0px">
+  <div class="br-tier">青少年赛事</div>
+  <div class="br-name">K8 赛事数据库</div>
+  <div class="br-stat num">多年积累，逐场记录</div>
+</div>
+<div class="br-link rv d2"><span>同一套画像口径</span></div>
+<div class="br-step rv d2" style="--lift:26px">
+  <div class="br-tier">大学联赛</div>
+  <div class="br-name">CUBAL 球员画像</div>
+  <div class="br-stat num">1,258 名球员入库，554 人当季画像</div>
+</div>
+<div class="br-link rv d3"><span>同一套画像口径</span></div>
+<div class="br-step rv d3" style="--lift:52px">
+  <div class="br-tier">职业联赛</div>
+  <div class="br-name">CBA 球员画像</div>
+  <div class="br-stat num">连续两个赛季，八档画像在线</div>
+</div></div>
+   <div class="upd-block rv">
+    <h3 class="upd-h">升入 CBA 的球员，群体上有什么不同</h3>
+    <p class="upd-lead">用大学联赛历史数据比较升入 CBA 的 24 人与未升入的球员，差距集中在以下几项关键指标：</p>
+   </div>
+   <div class="updumb rv"><div class="ud-row">
+  <div class="ud-feat">身高</div>
+  <div class="ud-track"><span class="ud-mid"></span><span class="ud-bar ud-pos" style="--w:50.0%"></span></div>
+  <div class="ud-read"><b class="num">198</b> 升组，<span class="num">190</span> 未升<i>升组更高</i></div>
+</div>
+<div class="ud-row">
+  <div class="ud-feat">得分量</div>
+  <div class="ud-track"><span class="ud-mid"></span><span class="ud-bar ud-pos" style="--w:35.1%"></span></div>
+  <div class="ud-read"><b class="num">32.4</b> 升组，<span class="num">25.6</span> 未升<i>升组更高</i></div>
+</div>
+<div class="ud-row">
+  <div class="ud-feat">护框盖帽</div>
+  <div class="ud-track"><span class="ud-mid"></span><span class="ud-bar ud-pos" style="--w:43.1%"></span></div>
+  <div class="ud-read"><b class="num">1.9</b> 升组，<span class="num">0.9</span> 未升<i>升组更高</i></div>
+</div>
+<div class="ud-row">
+  <div class="ud-feat">造罚球</div>
+  <div class="ud-track"><span class="ud-mid"></span><span class="ud-bar ud-pos" style="--w:16.0%"></span></div>
+  <div class="ud-read"><b class="num">31%</b> 升组，<span class="num">26%</span> 未升<i>升组更高</i></div>
+</div></div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap"><div class="rv">
+    <div class="kicker">03　单场画像</div>
+    <h2>一场比赛，一道刻度</h2>
+    <p class="lead">Reee 球员评估算法将单场比赛的赛后数据转化为球员画像，为每一场表现提供及时反馈。</p>
+  </div></div>
+  <div class="wrap scrolly">
+    <div class="graphic"><svg id="anatomy" viewBox="0 0 100 100" data-s="0" aria-label="一场比赛怎么变成一道刻度">
+  <text class="kwm an-wm" x="97" y="6">概念演示（示意数据）</text>
+  <g class="an-g an-g0"><g class="an-ev" style="--tx:45.0px;--ty:14.0px"><circle cx="38" cy="36" r="1.6" fill="var(--ink-2)"/><text x="40.6" y="37" class="an-evt">出手</text></g><g class="an-ev" style="--tx:21.0px;--ty:20.0px"><circle cx="62" cy="30" r="1.6" fill="var(--ink-2)"/><text x="64.6" y="31" class="an-evt">出手</text></g><g class="an-ev" style="--tx:39.0px;--ty:-12.0px"><circle cx="44" cy="62" r="1.6" fill="var(--ink-2)"/><text x="46.6" y="63" class="an-evt">出手</text></g><g class="an-ev" style="--tx:25.0px;--ty:-6.0px"><circle cx="58" cy="56" r="1.6" fill="var(--ink-2)"/><text x="60.6" y="57" class="an-evt">出手</text></g><g class="an-ev" style="--tx:50.0px;--ty:0.0px"><circle cx="33" cy="50" r="1.6" fill="var(--ink-2)"/><text x="35.6" y="51" class="an-evt">出手</text></g><g class="an-ev" style="--tx:17.0px;--ty:6.0px"><circle cx="66" cy="44" r="1.6" fill="var(--ink-2)"/><text x="68.6" y="45" class="an-evt">篮板</text></g><g class="an-ev" style="--tx:33.0px;--ty:24.0px"><circle cx="50" cy="26" r="1.6" fill="var(--ink-2)"/><text x="52.6" y="27" class="an-evt">篮板</text></g><g class="an-ev" style="--tx:43.0px;--ty:-22.0px"><circle cx="40" cy="72" r="1.6" fill="var(--ink-2)"/><text x="42.6" y="73" class="an-evt">助攻</text></g><g class="an-ev" style="--tx:23.0px;--ty:-20.0px"><circle cx="60" cy="70" r="1.6" fill="var(--ink-2)"/><text x="62.6" y="71" class="an-evt">助攻</text></g><g class="an-ev" style="--tx:31.0px;--ty:6.0px"><circle cx="52" cy="44" r="1.6" fill="var(--ink-2)"/><text x="54.6" y="45" class="an-evt">抢断</text></g>
+    <text class="an-cap" x="50" y="92">某一场比赛留下的事件</text></g>
+  <g class="an-g an-g1"><g class="an-mix"><g class="an-md" style="--bx:-14.5px;--by:0.5px;--d:0.1s"><circle cx="66" cy="49" r="1.6" fill="#7aa6a0"/></g><g class="an-md" style="--bx:-14.0px;--by:7.0px;--d:0.16s"><circle cx="63" cy="44" r="1.6" fill="#7aa6a0"/></g><g class="an-md" style="--bx:-13.5px;--by:-6.5px;--d:0.22s"><circle cx="64" cy="55" r="1.6" fill="#7aa6a0"/></g><g class="an-md" style="--bx:-21.5px;--by:0.5px;--d:0.28s"><circle cx="70" cy="50" r="1.6" fill="#7aa6a0"/></g><g class="an-md" style="--bx:-10.0px;--by:13.5px;--d:0.18s"><circle cx="61" cy="38" r="1.6" fill="#7aa6a0"/><path d="M 61,36.4 A 1.6,1.6 0 0 1 61,39.6 Z" fill="#9b93b8"/></g><g class="an-md" style="--bx:-12.5px;--by:-12.0px;--d:0.24s"><circle cx="62" cy="61" r="1.6" fill="#7aa6a0"/><path d="M 62,59.4 A 1.6,1.6 0 0 1 62,62.6 Z" fill="#c2a24c"/></g><g class="an-md" style="--bx:-5.5px;--by:17.5px;--d:0.12s"><circle cx="57" cy="33" r="1.6" fill="#9b93b8"/></g><g class="an-md" style="--bx:-9.0px;--by:-16.5px;--d:0.3s"><circle cx="58" cy="66" r="1.6" fill="#c2a24c"/></g><g class="an-md" style="--bx:0.5px;--by:14.5px;--d:0.14s"><circle cx="50" cy="37" r="1.6" fill="#8a9a5b"/></g><g class="an-md" style="--bx:1.0px;--by:-14.5px;--d:0.26s"><circle cx="50" cy="63" r="1.6" fill="#b06a82"/></g><g class="an-md" style="--bx:9.5px;--by:-11.5px;--d:0.2s"><circle cx="39" cy="61" r="1.6" fill="#6a8fb0"/></g><g class="an-md" style="--bx:13.5px;--by:2.0px;--d:0.16s"><circle cx="37" cy="49" r="1.6" fill="#c8975f"/></g><g class="an-md" style="--bx:10.5px;--by:9.0px;--d:0.22s"><circle cx="41" cy="40" r="1.6" fill="#8a9a5b"/><path d="M 41,38.4 A 1.6,1.6 0 0 1 41,41.6 Z" fill="#6a8fb0"/></g><g class="an-md" style="--bx:5.5px;--by:-6.5px;--d:0.3s"><circle cx="44" cy="57" r="1.6" fill="#9c5f3c"/></g></g><g class="an-anchor"><circle cx="50.0" cy="17.0" r="1.7" fill="#8a9a5b"/><text x="50.0" y="13.6" class="an-at">组织型后卫</text></g><g class="an-anchor"><circle cx="73.3" cy="26.7" r="1.7" fill="#9b93b8"/><text x="73.3" y="23.3" class="an-at">双能卫</text></g><g class="an-anchor"><circle cx="83.0" cy="50.0" r="1.7" fill="#7aa6a0"/><text x="83.0" y="46.6" class="an-at">定点投手</text></g><g class="an-anchor"><circle cx="73.3" cy="73.3" r="1.7" fill="#c2a24c"/><text x="73.3" y="78.7" class="an-at">锋卫摇摆人</text></g><g class="an-anchor"><circle cx="50.0" cy="83.0" r="1.7" fill="#b06a82"/><text x="50.0" y="88.4" class="an-at">持球核心</text></g><g class="an-anchor"><circle cx="26.7" cy="73.3" r="1.7" fill="#6a8fb0"/><text x="26.7" y="78.7" class="an-at">空间型内线</text></g><g class="an-anchor"><circle cx="17.0" cy="50.0" r="1.7" fill="#c8975f"/><text x="17.0" y="55.4" class="an-at">禁区型内线-终结</text></g><g class="an-anchor"><circle cx="26.7" cy="26.7" r="1.7" fill="#9c5f3c"/><text x="26.7" y="23.3" class="an-at">禁区型内线-护框</text></g>
+    <circle class="an-hit" cx="83.0" cy="50.0" r="3.2" fill="#7aa6a0"/>
+  </g>
+  <g class="an-g an-g2">
+    <rect class="an-candle" x="46.5" y="34" width="7" height="34" rx="1.2" fill="#7aa6a0"/>
+    <line x1="50" y1="27" x2="50" y2="74" stroke="#7aa6a0" stroke-width="0.7" class="an-candle-w"/>
+    <text class="an-note" x="58" y="36">颜色，记当场打法</text>
+    <text class="an-note" x="58" y="50">高度，记当场表现</text>
+    <text class="an-note" x="58" y="64">细线，记场内波动</text>
+  </g>
+  <g class="an-g an-g3"><rect class="an-mini" x="30" y="62" width="5" height="10" rx="1" fill="#cfcdc3" style="--d:0.0s"/><rect class="an-mini" x="39" y="56" width="5" height="16" rx="1" fill="#cfcdc3" style="--d:0.1s"/><rect class="an-mini" x="48" y="63" width="5" height="9" rx="1" fill="#cfcdc3" style="--d:0.2s"/><rect class="an-mini" x="57" y="58" width="5" height="14" rx="1" fill="#cfcdc3" style="--d:0.3s"/><rect class="an-mini" x="66" y="54" width="5" height="18" rx="1" fill="#cfcdc3" style="--d:0.4s"/>
+    <rect class="an-mini an-mini-c" x="75" y="40" width="5" height="32" rx="1" fill="#7aa6a0" style="--d:.5s"/>
+    <text class="an-cap" x="50" y="92">六场了，还差四场挂标签</text>
+  </g>
+</svg>
+      <div class="klegend"><span class="lg"><i style="background:#8a9a5b"></i>组织型后卫</span><span class="lg"><i style="background:#9b93b8"></i>双能卫</span><span class="lg"><i style="background:#7aa6a0"></i>定点投手</span><span class="lg"><i style="background:#c2a24c"></i>锋卫摇摆人</span><span class="lg"><i style="background:#b06a82"></i>持球核心</span><span class="lg"><i style="background:#6a8fb0"></i>空间型内线</span><span class="lg"><i style="background:#c8975f"></i>禁区型内线-终结</span><span class="lg"><i style="background:#9c5f3c"></i>禁区型内线-护框</span></div>
+    </div>
+    <div class="steps">
+      <div class="step" data-step="0"><div class="step-card rv"><h3>这一场，留下了什么</h3><p>出手、篮板、助攻、抢断。留在积分牌上的数据，化作每场比赛的及时评估。</p></div></div>
+      <div class="step" data-step="1"><div class="step-card rv"><h3>当场算出一个归属</h3><p>Reee 球员评估模型结合睿联盟官方数据，让这场比赛当场有了答案：今天他打得像一名定点投手。</p></div></div>
+      <div class="step" data-step="2"><div class="step-card rv"><h3>压成一道刻度</h3><p>像门框上的身高线，一场一道。颜色记打法，高度记表现，细线记波动。打开睿联盟官方数据站，教练员就能知道，某位球员的指定比赛的打法画像。</p></div></div>
+      <div class="step" data-step="3"><div class="step-card rv"><h3>实时反馈，拨云见日</h3><p>积累到 8 至 12 场比赛后，为球员绘制他的球场画像。</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+   <div class="rv">
+    <div class="kicker">04　成长 K 线</div>
+    <h2>一名球员的两个赛季</h2>
+    <p class="lead">一名示意球员，三十道刻度。门框上的身高线只会往上，赛场上的刻度会起伏，起伏里才看得见真正的成长：前十一场他在替补席的缝隙里找位置，一会像投手，一会像双能卫；第十二场，累计满一百五十分钟，标签第一次挂上他的球员页；新赛季第一场，画像转向锋卫摇摆人，之后再没回头。
+      </p>
+     <p>这样的转变，教练们称之为蜕变。</p>
+    <p style="font-size:1.5em; font-weight:600; color:#b85c38;">Reee 球员评估模型在将蜕变画出来，别让它只留在印象里。</p>
+   </div>
+   <div class="kfig rv"><svg class="ksvg" viewBox="0 0 1030 474"
+  role="img" aria-label="示意球员两季三十场的成长 K 线">
+  <text class="kwm" x="1000" y="20">概念演示（示意数据）</text>
+  <line class="kbase" x1="34" y1="364" x2="1006" y2="364"/>
+  <text class="kax" x="26" y="72">高</text>
+  <text class="kax" x="26" y="364">低</text>
+  <line class="ksea" x1="546" y1="38" x2="546" y2="364"/>
+  <text class="kseat" x="553" y="50">新赛季</text>
+  <line class="kthr" x1="402" y1="58" x2="402" y2="364"/>
+  <text class="kthrt" x="402" y="32">第 12 场　累计满 150 分钟</text>
+  <text class="kthrt2" x="402" y="46">画像标签挂上球员页</text>
+  <g class="kc kdim" style="--d:0.00s"><rect class="kbar" x="42.0" y="224.2" width="16" height="139.8" rx="3" fill="var(--paper)" stroke="#7aa6a0" stroke-dasharray="3 3"/><title>第 1 场　14 分钟　画像 定点投手　纯度 50%</title></g><g class="kc kdim" style="--d:0.04s"><rect class="kbar" x="74.0" y="271.3" width="16" height="92.7" rx="3" fill="var(--paper)" stroke="#9b93b8" stroke-dasharray="3 3"/><title>第 2 场　16 分钟　画像 双能卫　纯度 38%</title></g><g class="kc kdim" style="--d:0.08s"><rect class="kbar" x="106.0" y="238.6" width="16" height="125.4" rx="3" fill="var(--paper)" stroke="#7aa6a0" stroke-dasharray="3 3"/><title>第 3 场　15 分钟　画像 定点投手　纯度 34%</title></g><g class="kc kdim" style="--d:0.12s"><rect class="kbar" x="138.0" y="218.8" width="16" height="145.2" rx="3" fill="var(--paper)" stroke="#7aa6a0" stroke-dasharray="3 3"/><title>第 4 场　13 分钟　画像 定点投手　纯度 42%</title></g><g class="kc kdim" style="--d:0.16s"><rect class="kbar" x="170.0" y="276.1" width="16" height="87.9" rx="3" fill="var(--paper)" stroke="#c2a24c" stroke-dasharray="3 3"/><title>第 5 场　17 分钟　画像 锋卫摇摆人　纯度 47%</title></g><g class="kc kdim" style="--d:0.20s"><rect class="kbar" x="202.0" y="264.1" width="16" height="99.9" rx="3" fill="var(--paper)" stroke="#7aa6a0" stroke-dasharray="3 3"/><title>第 6 场　16 分钟　画像 定点投手　纯度 35%</title></g><g class="kc kdim" style="--d:0.24s"><rect class="kbar" x="234.0" y="228.4" width="16" height="135.6" rx="3" fill="var(--paper)" stroke="#9b93b8" stroke-dasharray="3 3"/><title>第 7 场　18 分钟　画像 双能卫　纯度 34%</title></g><g class="kc kdim" style="--d:0.28s"><rect class="kbar" x="266.0" y="253.0" width="16" height="111.0" rx="3" fill="var(--paper)" stroke="#7aa6a0" stroke-dasharray="3 3"/><title>第 8 场　19 分钟　画像 定点投手　纯度 46%</title></g><g class="kc kdim" style="--d:0.32s"><rect class="kbar" x="298.0" y="271.6" width="16" height="92.4" rx="3" fill="var(--paper)" stroke="#7aa6a0" stroke-dasharray="3 3"/><title>第 9 场　17 分钟　画像 定点投手　纯度 37%</title></g><g class="kc kdim" style="--d:0.36s"><rect class="kbar" x="330.0" y="278.2" width="16" height="85.8" rx="3" fill="var(--paper)" stroke="#9b93b8" stroke-dasharray="3 3"/><title>第 10 场　20 分钟　画像 双能卫　纯度 49%</title></g><g class="kc kdim" style="--d:0.40s"><rect class="kbar" x="362.0" y="212.2" width="16" height="151.8" rx="3" fill="var(--paper)" stroke="#7aa6a0" stroke-dasharray="3 3"/><title>第 11 场　19 分钟　画像 定点投手　纯度 41%</title></g><g class="kc" style="--d:0.44s"><rect class="kbar" x="394.0" y="211.9" width="16" height="152.1" rx="3" fill="#7aa6a0" stroke="#7aa6a0"/><title>第 12 场　19 分钟　画像 定点投手　纯度 48%</title></g><g class="kc" style="--d:0.48s"><rect class="kbar" x="426.0" y="196.6" width="16" height="167.4" rx="3" fill="#7aa6a0" stroke="#7aa6a0"/><title>第 13 场　21 分钟　画像 定点投手　纯度 56%</title></g><g class="kc" style="--d:0.52s"><rect class="kbar" x="458.0" y="204.7" width="16" height="159.3" rx="3" fill="#7aa6a0" stroke="#7aa6a0"/><title>第 14 场　23 分钟　画像 定点投手　纯度 50%</title></g><g class="kc" style="--d:0.56s"><rect class="kbar" x="490.0" y="223.0" width="16" height="141.0" rx="3" fill="#7aa6a0" stroke="#7aa6a0"/><title>第 15 场　20 分钟　画像 定点投手　纯度 49%</title></g><g class="kc" style="--d:0.60s"><rect class="kbar" x="522.0" y="229.6" width="16" height="134.4" rx="3" fill="#7aa6a0" stroke="#7aa6a0"/><title>第 16 场　24 分钟　画像 定点投手　纯度 57%</title></g><g class="kc" style="--d:0.64s"><rect class="kbar" x="554.0" y="160.0" width="16" height="204.0" rx="3" fill="#c2a24c" stroke="#c2a24c"/><title>第 17 场　26 分钟　画像 锋卫摇摆人　纯度 61%</title></g><g class="kc" style="--d:0.68s"><rect class="kbar" x="586.0" y="172.9" width="16" height="191.1" rx="3" fill="#c2a24c" stroke="#c2a24c"/><title>第 18 场　28 分钟　画像 锋卫摇摆人　纯度 63%</title></g><g class="kc" style="--d:0.72s"><rect class="kbar" x="618.0" y="205.0" width="16" height="159.0" rx="3" fill="#c2a24c" stroke="#c2a24c"/><title>第 19 场　25 分钟　画像 锋卫摇摆人　纯度 63%</title></g><g class="kc" style="--d:0.76s"><rect class="kbar" x="650.0" y="190.6" width="16" height="173.4" rx="3" fill="#c2a24c" stroke="#c2a24c"/><title>第 20 场　29 分钟　画像 锋卫摇摆人　纯度 67%</title></g><g class="kc" style="--d:0.80s"><rect class="kbar" x="682.0" y="175.6" width="16" height="188.4" rx="3" fill="#c2a24c" stroke="#c2a24c"/><title>第 21 场　27 分钟　画像 锋卫摇摆人　纯度 68%</title></g><g class="kc" style="--d:0.84s"><rect class="kbar" x="714.0" y="223.0" width="16" height="141.0" rx="3" fill="#c2a24c" stroke="#c2a24c"/><title>第 22 场　30 分钟　画像 锋卫摇摆人　纯度 46%</title></g><g class="kc" style="--d:0.88s"><rect class="kbar" x="746.0" y="151.3" width="16" height="212.7" rx="3" fill="#c2a24c" stroke="#c2a24c"/><title>第 23 场　28 分钟　画像 锋卫摇摆人　纯度 65%</title></g><g class="kc" style="--d:0.92s"><rect class="kbar" x="778.0" y="137.5" width="16" height="226.5" rx="3" fill="#c2a24c" stroke="#c2a24c"/><title>第 24 场　26 分钟　画像 锋卫摇摆人　纯度 70%</title></g><g class="kc" style="--d:0.96s"><rect class="kbar" x="810.0" y="138.4" width="16" height="225.6" rx="3" fill="#c2a24c" stroke="#c2a24c"/><title>第 25 场　31 分钟　画像 锋卫摇摆人　纯度 70%</title></g><g class="kc" style="--d:1.00s"><rect class="kbar" x="842.0" y="128.5" width="16" height="235.5" rx="3" fill="#c2a24c" stroke="#c2a24c"/><title>第 26 场　29 分钟　画像 锋卫摇摆人　纯度 71%</title></g><g class="kc" style="--d:1.04s"><rect class="kbar" x="874.0" y="146.5" width="16" height="217.5" rx="3" fill="#c2a24c" stroke="#c2a24c"/><title>第 27 场　28 分钟　画像 锋卫摇摆人　纯度 76%</title></g><g class="kc" style="--d:1.08s"><rect class="kbar" x="906.0" y="117.4" width="16" height="246.6" rx="3" fill="#c2a24c" stroke="#c2a24c"/><title>第 28 场　30 分钟　画像 锋卫摇摆人　纯度 75%</title></g><g class="kc" style="--d:1.12s"><rect class="kbar" x="938.0" y="145.6" width="16" height="218.4" rx="3" fill="#c2a24c" stroke="#c2a24c"/><title>第 29 场　27 分钟　画像 锋卫摇摆人　纯度 82%</title></g><g class="kc" style="--d:1.16s"><rect class="kbar" x="970.0" y="126.4" width="16" height="237.6" rx="3" fill="#c2a24c" stroke="#c2a24c"/><title>第 30 场　31 分钟　画像 锋卫摇摆人　纯度 77%</title></g><g class="kstrip"><rect x="42.0" y="436.0" width="16" height="13.0" fill="#7aa6a0" opacity=".85"/><rect x="42.0" y="449.0" width="16" height="7.2" fill="#9b93b8" opacity=".85"/><rect x="42.0" y="456.1" width="16" height="1.0" fill="#6a8fb0" opacity=".85"/><rect x="42.0" y="457.1" width="16" height="1.0" fill="#8a9a5b" opacity=".85"/><rect x="42.0" y="458.1" width="16" height="1.0" fill="#c8975f" opacity=".85"/><rect x="42.0" y="459.1" width="16" height="1.0" fill="#9c5f3c" opacity=".85"/><rect x="42.0" y="460.1" width="16" height="1.0" fill="#c2a24c" opacity=".85"/><rect x="42.0" y="461.1" width="16" height="1.0" fill="#b06a82" opacity=".85"/><rect x="74.0" y="436.0" width="16" height="9.8" fill="#9b93b8" opacity=".85"/><rect x="74.0" y="445.8" width="16" height="8.9" fill="#7aa6a0" opacity=".85"/><rect x="74.0" y="454.7" width="16" height="1.2" fill="#6a8fb0" opacity=".85"/><rect x="74.0" y="455.9" width="16" height="1.2" fill="#8a9a5b" opacity=".85"/><rect x="74.0" y="457.2" width="16" height="1.2" fill="#c8975f" opacity=".85"/><rect x="74.0" y="458.4" width="16" height="1.2" fill="#9c5f3c" opacity=".85"/><rect x="74.0" y="459.6" width="16" height="1.2" fill="#c2a24c" opacity=".85"/><rect x="74.0" y="460.8" width="16" height="1.2" fill="#b06a82" opacity=".85"/><rect x="106.0" y="436.0" width="16" height="9.5" fill="#9b93b8" opacity=".85"/><rect x="106.0" y="445.5" width="16" height="8.8" fill="#7aa6a0" opacity=".85"/><rect x="106.0" y="454.3" width="16" height="1.3" fill="#6a8fb0" opacity=".85"/><rect x="106.0" y="455.6" width="16" height="1.3" fill="#8a9a5b" opacity=".85"/><rect x="106.0" y="456.9" width="16" height="1.3" fill="#c8975f" opacity=".85"/><rect x="106.0" y="458.2" width="16" height="1.3" fill="#9c5f3c" opacity=".85"/><rect x="106.0" y="459.5" width="16" height="1.3" fill="#c2a24c" opacity=".85"/><rect x="106.0" y="460.8" width="16" height="1.3" fill="#b06a82" opacity=".85"/><rect x="138.0" y="436.0" width="16" height="11.0" fill="#7aa6a0" opacity=".85"/><rect x="138.0" y="447.0" width="16" height="8.2" fill="#9b93b8" opacity=".85"/><rect x="138.0" y="455.3" width="16" height="1.1" fill="#6a8fb0" opacity=".85"/><rect x="138.0" y="456.4" width="16" height="1.1" fill="#8a9a5b" opacity=".85"/><rect x="138.0" y="457.5" width="16" height="1.1" fill="#c8975f" opacity=".85"/><rect x="138.0" y="458.6" width="16" height="1.1" fill="#9c5f3c" opacity=".85"/><rect x="138.0" y="459.7" width="16" height="1.1" fill="#c2a24c" opacity=".85"/><rect x="138.0" y="460.9" width="16" height="1.1" fill="#b06a82" opacity=".85"/><rect x="170.0" y="436.0" width="16" height="12.1" fill="#c2a24c" opacity=".85"/><rect x="170.0" y="448.1" width="16" height="7.6" fill="#9b93b8" opacity=".85"/><rect x="170.0" y="455.8" width="16" height="1.0" fill="#6a8fb0" opacity=".85"/><rect x="170.0" y="456.8" width="16" height="1.0" fill="#7aa6a0" opacity=".85"/><rect x="170.0" y="457.8" width="16" height="1.0" fill="#8a9a5b" opacity=".85"/><rect x="170.0" y="458.9" width="16" height="1.0" fill="#c8975f" opacity=".85"/><rect x="170.0" y="459.9" width="16" height="1.0" fill="#9c5f3c" opacity=".85"/><rect x="170.0" y="461.0" width="16" height="1.0" fill="#b06a82" opacity=".85"/><rect x="202.0" y="436.0" width="16" height="9.3" fill="#9b93b8" opacity=".85"/><rect x="202.0" y="445.3" width="16" height="9.2" fill="#7aa6a0" opacity=".85"/><rect x="202.0" y="454.4" width="16" height="1.3" fill="#6a8fb0" opacity=".85"/><rect x="202.0" y="455.7" width="16" height="1.3" fill="#8a9a5b" opacity=".85"/><rect x="202.0" y="457.0" width="16" height="1.3" fill="#c8975f" opacity=".85"/><rect x="202.0" y="458.2" width="16" height="1.3" fill="#9c5f3c" opacity=".85"/><rect x="202.0" y="459.5" width="16" height="1.3" fill="#c2a24c" opacity=".85"/><rect x="202.0" y="460.8" width="16" height="1.3" fill="#b06a82" opacity=".85"/><rect x="234.0" y="436.0" width="16" height="9.4" fill="#7aa6a0" opacity=".85"/><rect x="234.0" y="445.4" width="16" height="8.9" fill="#9b93b8" opacity=".85"/><rect x="234.0" y="454.3" width="16" height="1.3" fill="#6a8fb0" opacity=".85"/><rect x="234.0" y="455.6" width="16" height="1.3" fill="#8a9a5b" opacity=".85"/><rect x="234.0" y="456.9" width="16" height="1.3" fill="#c8975f" opacity=".85"/><rect x="234.0" y="458.1" width="16" height="1.3" fill="#9c5f3c" opacity=".85"/><rect x="234.0" y="459.4" width="16" height="1.3" fill="#c2a24c" opacity=".85"/><rect x="234.0" y="460.7" width="16" height="1.3" fill="#b06a82" opacity=".85"/><rect x="266.0" y="436.0" width="16" height="11.9" fill="#7aa6a0" opacity=".85"/><rect x="266.0" y="447.9" width="16" height="7.8" fill="#9b93b8" opacity=".85"/><rect x="266.0" y="455.7" width="16" height="1.1" fill="#6a8fb0" opacity=".85"/><rect x="266.0" y="456.7" width="16" height="1.1" fill="#8a9a5b" opacity=".85"/><rect x="266.0" y="457.8" width="16" height="1.1" fill="#c8975f" opacity=".85"/><rect x="266.0" y="458.9" width="16" height="1.1" fill="#9c5f3c" opacity=".85"/><rect x="266.0" y="459.9" width="16" height="1.1" fill="#c2a24c" opacity=".85"/><rect x="266.0" y="461.0" width="16" height="1.1" fill="#b06a82" opacity=".85"/><rect x="298.0" y="436.0" width="16" height="9.6" fill="#7aa6a0" opacity=".85"/><rect x="298.0" y="445.6" width="16" height="9.0" fill="#9b93b8" opacity=".85"/><rect x="298.0" y="454.6" width="16" height="1.2" fill="#6a8fb0" opacity=".85"/><rect x="298.0" y="455.8" width="16" height="1.2" fill="#8a9a5b" opacity=".85"/><rect x="298.0" y="457.1" width="16" height="1.2" fill="#c8975f" opacity=".85"/><rect x="298.0" y="458.3" width="16" height="1.2" fill="#9c5f3c" opacity=".85"/><rect x="298.0" y="459.5" width="16" height="1.2" fill="#c2a24c" opacity=".85"/><rect x="298.0" y="460.7" width="16" height="1.2" fill="#b06a82" opacity=".85"/><rect x="330.0" y="436.0" width="16" height="12.6" fill="#9b93b8" opacity=".85"/><rect x="330.0" y="448.6" width="16" height="7.4" fill="#7aa6a0" opacity=".85"/><rect x="330.0" y="456.0" width="16" height="1.0" fill="#6a8fb0" opacity=".85"/><rect x="330.0" y="457.0" width="16" height="1.0" fill="#8a9a5b" opacity=".85"/><rect x="330.0" y="458.0" width="16" height="1.0" fill="#c8975f" opacity=".85"/><rect x="330.0" y="459.0" width="16" height="1.0" fill="#9c5f3c" opacity=".85"/><rect x="330.0" y="460.1" width="16" height="1.0" fill="#c2a24c" opacity=".85"/><rect x="330.0" y="461.1" width="16" height="1.0" fill="#b06a82" opacity=".85"/><rect x="362.0" y="436.0" width="16" height="10.6" fill="#7aa6a0" opacity=".85"/><rect x="362.0" y="446.6" width="16" height="8.5" fill="#9b93b8" opacity=".85"/><rect x="362.0" y="455.1" width="16" height="1.1" fill="#6a8fb0" opacity=".85"/><rect x="362.0" y="456.2" width="16" height="1.1" fill="#8a9a5b" opacity=".85"/><rect x="362.0" y="457.4" width="16" height="1.1" fill="#c8975f" opacity=".85"/><rect x="362.0" y="458.5" width="16" height="1.1" fill="#9c5f3c" opacity=".85"/><rect x="362.0" y="459.7" width="16" height="1.1" fill="#c2a24c" opacity=".85"/><rect x="362.0" y="460.8" width="16" height="1.1" fill="#b06a82" opacity=".85"/><rect x="394.0" y="436.0" width="16" height="12.5" fill="#7aa6a0" opacity=".85"/><rect x="394.0" y="448.5" width="16" height="7.4" fill="#9b93b8" opacity=".85"/><rect x="394.0" y="455.9" width="16" height="1.0" fill="#6a8fb0" opacity=".85"/><rect x="394.0" y="457.0" width="16" height="1.0" fill="#8a9a5b" opacity=".85"/><rect x="394.0" y="458.0" width="16" height="1.0" fill="#c8975f" opacity=".85"/><rect x="394.0" y="459.0" width="16" height="1.0" fill="#9c5f3c" opacity=".85"/><rect x="394.0" y="460.0" width="16" height="1.0" fill="#c2a24c" opacity=".85"/><rect x="394.0" y="461.0" width="16" height="1.0" fill="#b06a82" opacity=".85"/><rect x="426.0" y="436.0" width="16" height="14.5" fill="#7aa6a0" opacity=".85"/><rect x="426.0" y="450.5" width="16" height="6.3" fill="#9b93b8" opacity=".85"/><rect x="426.0" y="456.8" width="16" height="0.9" fill="#6a8fb0" opacity=".85"/><rect x="426.0" y="457.7" width="16" height="0.9" fill="#8a9a5b" opacity=".85"/><rect x="426.0" y="458.5" width="16" height="0.9" fill="#c8975f" opacity=".85"/><rect x="426.0" y="459.4" width="16" height="0.9" fill="#9c5f3c" opacity=".85"/><rect x="426.0" y="460.3" width="16" height="0.9" fill="#c2a24c" opacity=".85"/><rect x="426.0" y="461.1" width="16" height="0.9" fill="#b06a82" opacity=".85"/><rect x="458.0" y="436.0" width="16" height="13.0" fill="#7aa6a0" opacity=".85"/><rect x="458.0" y="449.0" width="16" height="7.2" fill="#9b93b8" opacity=".85"/><rect x="458.0" y="456.1" width="16" height="1.0" fill="#6a8fb0" opacity=".85"/><rect x="458.0" y="457.1" width="16" height="1.0" fill="#8a9a5b" opacity=".85"/><rect x="458.0" y="458.1" width="16" height="1.0" fill="#c8975f" opacity=".85"/><rect x="458.0" y="459.1" width="16" height="1.0" fill="#9c5f3c" opacity=".85"/><rect x="458.0" y="460.1" width="16" height="1.0" fill="#c2a24c" opacity=".85"/><rect x="458.0" y="461.1" width="16" height="1.0" fill="#b06a82" opacity=".85"/><rect x="490.0" y="436.0" width="16" height="12.6" fill="#7aa6a0" opacity=".85"/><rect x="490.0" y="448.6" width="16" height="7.4" fill="#9b93b8" opacity=".85"/><rect x="490.0" y="456.0" width="16" height="1.0" fill="#6a8fb0" opacity=".85"/><rect x="490.0" y="457.0" width="16" height="1.0" fill="#8a9a5b" opacity=".85"/><rect x="490.0" y="458.0" width="16" height="1.0" fill="#c8975f" opacity=".85"/><rect x="490.0" y="459.0" width="16" height="1.0" fill="#9c5f3c" opacity=".85"/><rect x="490.0" y="460.0" width="16" height="1.0" fill="#c2a24c" opacity=".85"/><rect x="490.0" y="461.0" width="16" height="1.0" fill="#b06a82" opacity=".85"/><rect x="522.0" y="436.0" width="16" height="14.9" fill="#7aa6a0" opacity=".85"/><rect x="522.0" y="450.9" width="16" height="6.1" fill="#9b93b8" opacity=".85"/><rect x="522.0" y="457.0" width="16" height="0.8" fill="#6a8fb0" opacity=".85"/><rect x="522.0" y="457.8" width="16" height="0.8" fill="#8a9a5b" opacity=".85"/><rect x="522.0" y="458.7" width="16" height="0.8" fill="#c8975f" opacity=".85"/><rect x="522.0" y="459.5" width="16" height="0.8" fill="#9c5f3c" opacity=".85"/><rect x="522.0" y="460.3" width="16" height="0.8" fill="#c2a24c" opacity=".85"/><rect x="522.0" y="461.2" width="16" height="0.8" fill="#b06a82" opacity=".85"/><rect x="554.0" y="436.0" width="16" height="15.9" fill="#c2a24c" opacity=".85"/><rect x="554.0" y="451.9" width="16" height="5.6" fill="#7aa6a0" opacity=".85"/><rect x="554.0" y="457.4" width="16" height="0.8" fill="#6a8fb0" opacity=".85"/><rect x="554.0" y="458.2" width="16" height="0.8" fill="#8a9a5b" opacity=".85"/><rect x="554.0" y="459.0" width="16" height="0.8" fill="#c8975f" opacity=".85"/><rect x="554.0" y="459.7" width="16" height="0.8" fill="#9c5f3c" opacity=".85"/><rect x="554.0" y="460.5" width="16" height="0.8" fill="#9b93b8" opacity=".85"/><rect x="554.0" y="461.2" width="16" height="0.8" fill="#b06a82" opacity=".85"/><rect x="586.0" y="436.0" width="16" height="16.4" fill="#c2a24c" opacity=".85"/><rect x="586.0" y="452.4" width="16" height="5.3" fill="#7aa6a0" opacity=".85"/><rect x="586.0" y="457.7" width="16" height="0.7" fill="#6a8fb0" opacity=".85"/><rect x="586.0" y="458.4" width="16" height="0.7" fill="#8a9a5b" opacity=".85"/><rect x="586.0" y="459.1" width="16" height="0.7" fill="#c8975f" opacity=".85"/><rect x="586.0" y="459.9" width="16" height="0.7" fill="#9c5f3c" opacity=".85"/><rect x="586.0" y="460.6" width="16" height="0.7" fill="#9b93b8" opacity=".85"/><rect x="586.0" y="461.3" width="16" height="0.7" fill="#b06a82" opacity=".85"/><rect x="618.0" y="436.0" width="16" height="16.4" fill="#c2a24c" opacity=".85"/><rect x="618.0" y="452.4" width="16" height="5.3" fill="#7aa6a0" opacity=".85"/><rect x="618.0" y="457.7" width="16" height="0.7" fill="#6a8fb0" opacity=".85"/><rect x="618.0" y="458.4" width="16" height="0.7" fill="#8a9a5b" opacity=".85"/><rect x="618.0" y="459.1" width="16" height="0.7" fill="#c8975f" opacity=".85"/><rect x="618.0" y="459.9" width="16" height="0.7" fill="#9c5f3c" opacity=".85"/><rect x="618.0" y="460.6" width="16" height="0.7" fill="#9b93b8" opacity=".85"/><rect x="618.0" y="461.3" width="16" height="0.7" fill="#b06a82" opacity=".85"/><rect x="650.0" y="436.0" width="16" height="17.4" fill="#c2a24c" opacity=".85"/><rect x="650.0" y="453.4" width="16" height="4.7" fill="#7aa6a0" opacity=".85"/><rect x="650.0" y="458.1" width="16" height="0.7" fill="#6a8fb0" opacity=".85"/><rect x="650.0" y="458.8" width="16" height="0.7" fill="#8a9a5b" opacity=".85"/><rect x="650.0" y="459.4" width="16" height="0.7" fill="#c8975f" opacity=".85"/><rect x="650.0" y="460.1" width="16" height="0.7" fill="#9c5f3c" opacity=".85"/><rect x="650.0" y="460.7" width="16" height="0.7" fill="#9b93b8" opacity=".85"/><rect x="650.0" y="461.4" width="16" height="0.7" fill="#b06a82" opacity=".85"/><rect x="682.0" y="436.0" width="16" height="17.8" fill="#c2a24c" opacity=".85"/><rect x="682.0" y="453.8" width="16" height="4.5" fill="#7aa6a0" opacity=".85"/><rect x="682.0" y="458.3" width="16" height="0.6" fill="#6a8fb0" opacity=".85"/><rect x="682.0" y="458.9" width="16" height="0.6" fill="#8a9a5b" opacity=".85"/><rect x="682.0" y="459.6" width="16" height="0.6" fill="#c8975f" opacity=".85"/><rect x="682.0" y="460.2" width="16" height="0.6" fill="#9c5f3c" opacity=".85"/><rect x="682.0" y="460.8" width="16" height="0.6" fill="#9b93b8" opacity=".85"/><rect x="682.0" y="461.4" width="16" height="0.6" fill="#b06a82" opacity=".85"/><rect x="714.0" y="436.0" width="16" height="12.0" fill="#c2a24c" opacity=".85"/><rect x="714.0" y="448.0" width="16" height="7.7" fill="#7aa6a0" opacity=".85"/><rect x="714.0" y="455.7" width="16" height="1.1" fill="#6a8fb0" opacity=".85"/><rect x="714.0" y="456.7" width="16" height="1.1" fill="#8a9a5b" opacity=".85"/><rect x="714.0" y="457.8" width="16" height="1.1" fill="#c8975f" opacity=".85"/><rect x="714.0" y="458.9" width="16" height="1.1" fill="#9c5f3c" opacity=".85"/><rect x="714.0" y="459.9" width="16" height="1.1" fill="#9b93b8" opacity=".85"/><rect x="714.0" y="461.0" width="16" height="1.1" fill="#b06a82" opacity=".85"/><rect x="746.0" y="436.0" width="16" height="16.8" fill="#c2a24c" opacity=".85"/><rect x="746.0" y="452.8" width="16" height="5.1" fill="#7aa6a0" opacity=".85"/><rect x="746.0" y="457.9" width="16" height="0.7" fill="#6a8fb0" opacity=".85"/><rect x="746.0" y="458.6" width="16" height="0.7" fill="#8a9a5b" opacity=".85"/><rect x="746.0" y="459.3" width="16" height="0.7" fill="#c8975f" opacity=".85"/><rect x="746.0" y="460.0" width="16" height="0.7" fill="#9c5f3c" opacity=".85"/><rect x="746.0" y="460.7" width="16" height="0.7" fill="#9b93b8" opacity=".85"/><rect x="746.0" y="461.4" width="16" height="0.7" fill="#b06a82" opacity=".85"/><rect x="778.0" y="436.0" width="16" height="18.1" fill="#c2a24c" opacity=".85"/><rect x="778.0" y="454.1" width="16" height="4.4" fill="#7aa6a0" opacity=".85"/><rect x="810.0" y="436.0" width="16" height="18.3" fill="#c2a24c" opacity=".85"/><rect x="810.0" y="454.3" width="16" height="4.2" fill="#7aa6a0" opacity=".85"/><rect x="842.0" y="436.0" width="16" height="18.4" fill="#c2a24c" opacity=".85"/><rect x="842.0" y="454.4" width="16" height="4.2" fill="#7aa6a0" opacity=".85"/><rect x="874.0" y="436.0" width="16" height="19.8" fill="#c2a24c" opacity=".85"/><rect x="874.0" y="455.8" width="16" height="3.4" fill="#7aa6a0" opacity=".85"/><rect x="906.0" y="436.0" width="16" height="19.6" fill="#c2a24c" opacity=".85"/><rect x="906.0" y="455.6" width="16" height="3.5" fill="#7aa6a0" opacity=".85"/><rect x="938.0" y="436.0" width="16" height="21.3" fill="#c2a24c" opacity=".85"/><rect x="938.0" y="457.3" width="16" height="2.6" fill="#7aa6a0" opacity=".85"/><rect x="970.0" y="436.0" width="16" height="20.1" fill="#c2a24c" opacity=".85"/><rect x="970.0" y="456.1" width="16" height="3.2" fill="#7aa6a0" opacity=".85"/><text class="kxl" x="30" y="448" text-anchor="end">八类</text><text class="kxl" x="30" y="460" text-anchor="end">比例</text></g>
+  <path class="kturnp" d="M 557 372 L 567 372 L 562 364 Z"/>
+  <text class="kturnt" x="562" y="408">转折点　新赛季第 1 场</text>
+  <text class="kturnt2" x="562" y="424">画像从定点投手转向锋卫摇摆人，余下 14 场保持</text>
+  <text class="kdip" x="722" y="127">第 22 场发挥失常</text><text class="kdip" x="722" y="141">随后回升</text>
+  <text class="kxl" x="50" y="390">1</text><text class="kxl" x="178" y="390">5</text><text class="kxl" x="338" y="390">10</text><text class="kxl" x="658" y="390">20</text><text class="kxl" x="818" y="390">25</text><text class="kxl" x="978" y="390">30</text>
+</svg></div>
+   <p class="kcap rv">每道刻度是一场比赛。刻度高是本场综合表现的示意指数，颜色是当场画像归属，虚线空心条表示累计分钟未满门槛，只记录不发布。下方细条带是当场八类打法的比例构成，颜色越纯，画像越清晰。横轴为场次。</p>
+   <div class="klegend rv"><span class="lg"><i style="background:#8a9a5b"></i>组织型后卫</span><span class="lg"><i style="background:#9b93b8"></i>双能卫</span><span class="lg"><i style="background:#7aa6a0"></i>定点投手</span><span class="lg"><i style="background:#c2a24c"></i>锋卫摇摆人</span><span class="lg"><i style="background:#b06a82"></i>持球核心</span><span class="lg"><i style="background:#6a8fb0"></i>空间型内线</span><span class="lg"><i style="background:#c8975f"></i>禁区型内线-终结</span><span class="lg"><i style="background:#9c5f3c"></i>禁区型内线-护框</span></div>
+  </div>
+</section>
+
+<section class="sec band">
+  <div class="wrap">
+   <div class="rv">
+    <div class="kicker">05　转折的共性</div>
+    <h2>蜕变，有迹可循</h2>
+    <p class="lead">上面那条线是示意，下面全是真实数据。433 名打了多个赛季的球员里，232 人换过打法；仅投手转向摇摆人这一条路径，一年就有 26 人。每一名正在转折的青少年球员，数据库里都有几十名走过同一条路的先例。这是四个赛季的积累：别人记下了比分，我们记下了球员的成长过程。</p>
+   </div>
+   <div class="flows"><div class="fl-row rv">
+  <div class="fl-pair"><i style="background:#7aa6a0"></i>定点投手<svg class="fl-ar" viewBox="0 0 24 10" aria-hidden="true"><path d="M1 5 H19 M15 1.4 L19.5 5 L15 8.6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><i style="background:#c2a24c"></i>锋卫摇摆人</div>
+  <div class="fl-track"><span class="fl-bar" style="--w:100%;--c:#c2a24c"></span></div>
+  <div class="fl-n num">26 人</div>
+</div>
+<div class="fl-row rv">
+  <div class="fl-pair"><i style="background:#7aa6a0"></i>定点投手<svg class="fl-ar" viewBox="0 0 24 10" aria-hidden="true"><path d="M1 5 H19 M15 1.4 L19.5 5 L15 8.6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><i style="background:#9b93b8"></i>双能卫</div>
+  <div class="fl-track"><span class="fl-bar" style="--w:73%;--c:#9b93b8"></span></div>
+  <div class="fl-n num">19 人</div>
+</div>
+<div class="fl-row rv">
+  <div class="fl-pair"><i style="background:#9c5f3c"></i>禁区型内线-护框<svg class="fl-ar" viewBox="0 0 24 10" aria-hidden="true"><path d="M1 5 H19 M15 1.4 L19.5 5 L15 8.6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><i style="background:#c8975f"></i>禁区型内线-终结</div>
+  <div class="fl-track"><span class="fl-bar" style="--w:58%;--c:#c8975f"></span></div>
+  <div class="fl-n num">15 人</div>
+</div>
+<div class="fl-row rv">
+  <div class="fl-pair"><i style="background:#b06a82"></i>持球核心<svg class="fl-ar" viewBox="0 0 24 10" aria-hidden="true"><path d="M1 5 H19 M15 1.4 L19.5 5 L15 8.6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><i style="background:#c2a24c"></i>锋卫摇摆人</div>
+  <div class="fl-track"><span class="fl-bar" style="--w:50%;--c:#c2a24c"></span></div>
+  <div class="fl-n num">13 人</div>
+</div>
+<div class="fl-row rv">
+  <div class="fl-pair"><i style="background:#8a9a5b"></i>组织型后卫<svg class="fl-ar" viewBox="0 0 24 10" aria-hidden="true"><path d="M1 5 H19 M15 1.4 L19.5 5 L15 8.6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><i style="background:#9b93b8"></i>双能卫</div>
+  <div class="fl-track"><span class="fl-bar" style="--w:46%;--c:#9b93b8"></span></div>
+  <div class="fl-n num">12 人</div>
+</div>
+<div class="fl-row rv">
+  <div class="fl-pair"><i style="background:#9b93b8"></i>双能卫<svg class="fl-ar" viewBox="0 0 24 10" aria-hidden="true"><path d="M1 5 H19 M15 1.4 L19.5 5 L15 8.6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><i style="background:#8a9a5b"></i>组织型后卫</div>
+  <div class="fl-track"><span class="fl-bar" style="--w:38%;--c:#8a9a5b"></span></div>
+  <div class="fl-n num">10 人</div>
+</div></div>
+   <p class="fl-note rv">条形为相邻赛季间画像真实迁移人数最多的六条路径。示意 K 线里那次「投手转摇摆人」，真实数据里一年就有 26 人走过。</p>
+   <div class="cases"><div class="cs-card rv">
+  <div class="cs-head"><b>常海鹏</b><span class="cs-tag">真实数据　四个赛季</span></div>
+  <svg viewBox="0 0 100 30" class="cs-svg" aria-label="常海鹏的四季画像轨迹"><line x1="10.0" y1="12" x2="36.666666666666664" y2="12" stroke="#5a584f" stroke-width="0.8"/><line x1="36.666666666666664" y1="12" x2="63.33333333333333" y2="12" stroke="#5a584f" stroke-width="0.8"/><line x1="63.33333333333333" y1="12" x2="90.0" y2="12" stroke="#5a584f" stroke-width="0.8"/><g><circle cx="10.0" cy="12" r="3" fill="#7aa6a0"/><text x="10.0" y="24" class="cs-sea">22-23</text><title>2022-23 定点投手</title></g><g><circle cx="36.666666666666664" cy="12" r="3" fill="#c2a24c"/><text x="36.666666666666664" y="24" class="cs-sea">23-24</text><title>2023-24 锋卫摇摆人</title></g><g><circle cx="63.33333333333333" cy="12" r="3" fill="#c2a24c"/><text x="63.33333333333333" y="24" class="cs-sea">24-25</text><title>2024-25 锋卫摇摆人</title></g><g><circle cx="90.0" cy="12" r="3" fill="#c2a24c"/><text x="90.0" y="24" class="cs-sea">25-26</text><title>2025-26 锋卫摇摆人</title></g></svg>
+  <div class="cs-seq"><span class="cs-chip"><i style="background:#7aa6a0"></i>定点投手</span><span class="cs-chip"><i style="background:#c2a24c"></i>锋卫摇摆人</span></div>
+  <p>2022-23 他还是个定点投手，第二年起连续三季都是锋卫摇摆人。示意 K 线里那条转折，他在真实数据里走了一遍。</p>
+</div>
+<div class="cs-card rv">
+  <div class="cs-head"><b>张庭尉</b><span class="cs-tag">真实数据　四个赛季</span></div>
+  <svg viewBox="0 0 100 30" class="cs-svg" aria-label="张庭尉的四季画像轨迹"><line x1="10.0" y1="12" x2="36.666666666666664" y2="12" stroke="#5a584f" stroke-width="0.8"/><line x1="36.666666666666664" y1="12" x2="63.33333333333333" y2="12" stroke="#5a584f" stroke-width="0.8"/><line x1="63.33333333333333" y1="12" x2="90.0" y2="12" stroke="#5a584f" stroke-width="0.8"/><g><circle cx="10.0" cy="12" r="3" fill="#6a8fb0"/><text x="10.0" y="24" class="cs-sea">22-23</text><title>2022-23 空间型内线</title></g><g><circle cx="36.666666666666664" cy="12" r="3" fill="#6a8fb0"/><text x="36.666666666666664" y="24" class="cs-sea">23-24</text><title>2023-24 空间型内线</title></g><g><circle cx="63.33333333333333" cy="12" r="3" fill="#6a8fb0"/><text x="63.33333333333333" y="24" class="cs-sea">24-25</text><title>2024-25 空间型内线</title></g><g><circle cx="90.0" cy="12" r="3" fill="#c8975f"/><text x="90.0" y="24" class="cs-sea">25-26</text><title>2025-26 禁区型内线-终结</title></g></svg>
+  <div class="cs-seq"><span class="cs-chip"><i style="background:#6a8fb0"></i>空间型内线</span><span class="cs-chip"><i style="background:#c8975f"></i>禁区型内线-终结</span></div>
+  <p>守了三个赛季空间型内线，第四季才转向禁区终结。蜕变也会迟到，但不该被错过。</p>
+</div></div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+   <div class="rv">
+    <div class="kicker">06　落到球员页</div>
+    <h2>教练用于轮换，家长看见成长，球员找到目标</h2>
+    <p class="lead">这些最后都长在一页球员档案上。教练拿它安排轮换，家长拿它看见这一年的成长，球员拿它寻找下一个目标：本场像谁，同档里谁和他相似，想成为关注的那名球员还差在哪。标签按积累分档，数据积累越厚，这一页能说的越多。</p>
+   </div>
+   <div class="pp">
+     <div class="pp-card rv">
+  <div class="pp-wm">概念演示（示意数据）</div>
+  <div class="pp-head">
+    <div class="pp-ava">甲</div>
+    <div><div class="pp-name">球员甲（示意）</div>
+    <div class="pp-meta num">U17　锋线　累计 324 分钟　17 场</div></div>
+  </div>
+  <div class="pp-chips">
+    <span class="pp-chip"><i style="background:#c2a24c"></i>本场画像　锋卫摇摆人 <b class="num">52%</b></span>
+    <span class="pp-chip"><i style="background:#9b93b8"></i>双能卫 <b class="num">27%</b></span>
+  </div>
+  <div class="pp-stats">
+    <div><b class="num">18</b><span>得分</span></div>
+    <div><b class="num">7</b><span>篮板</span></div>
+    <div><b class="num">3</b><span>助攻</span></div>
+    <div><b class="num">14</b><span>出手</span></div>
+  </div>
+  <div class="pp-sec">同档联赛里和他相似的球员<span class="pp-src">真实代表，2025-26 赛季级示例</span></div>
+  <div class="pp-sim"><i style="background:#c2a24c"></i><b>李仁政</b><span>西北工大</span></div><div class="pp-sim"><i style="background:#c2a24c"></i><b>史航</b><span>河南大学</span></div><div class="pp-sim"><i style="background:#c2a24c"></i><b>贠凯杰</b><span>西北工大</span></div>
+  <div class="pp-sec">成长参照　他关注的球员画像是持球核心</div>
+  <div class="pp-gap"><span>持球组织</span><div class="pp-track"><span style="--w:38%"></span></div><span class="num">差距大</span></div>
+  <div class="pp-gap"><span>造罚球</span><div class="pp-track"><span style="--w:62%"></span></div><span class="num">接近</span></div>
+</div>
+     <div class="tiers"><div class="tier rv d1">
+  <div class="tier-min num">从第 1 场起</div>
+  <div class="tier-name">单场及时反馈</div>
+  <p>打完就给：这一场像谁、几成像，下一场变了也照实说。不设门槛，先跑起来，每场都是一次反馈。</p>
+</div>
+<div class="tier rv d2">
+  <div class="tier-min num">满约 150 分钟，8 到 12 场</div>
+  <div class="tier-name">球员页挂初步标签</div>
+  <p>画像开始站得住，球员页挂上初步标签，注明还在积累。话不说在数据前面。</p>
+</div>
+<div class="tier rv d3">
+  <div class="tier-min num">满 300 分钟，15 到 20 场</div>
+  <div class="tier-name">标签进入稳定档</div>
+  <p>能和同档球员放在一起比较。相似球员、成长参照，这些功能全部打开，达到球探可用的标准。</p>
+</div></div>
+   </div>
+  </div>
+</section>
+
+<section class="close wrap rv">
+  <div class="kicker">收尾</div>
+  <p>根尖体育，焕新行业，普惠大众。</p>
+</section>
+
+<script>
+(function(){
+  var STATIC = location.hash.indexOf('static')>=0; if(STATIC) document.documentElement.classList.add('nomotion');
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches || STATIC;
+  var ease = function(p){ return p<0.5 ? 2*p*p : 1-Math.pow(-2*p+2,2)/2; };
+  function animate(dur, step){
+    if(reduce){ step(1); return; }
+    var t0=performance.now();
+    function fr(t){ var p=Math.min(1,(t-t0)/dur); step(ease(p)); if(p<1) requestAnimationFrame(fr); }
+    requestAnimationFrame(fr);
+  }
+  function countUp(el){
+    var to=parseFloat(el.getAttribute('data-to'))||0;
+    animate(1100, function(e){ el.textContent = Math.round(to*e).toLocaleString('zh-Hans-CN'); });
+  }
+  var rvObs=new IntersectionObserver(function(es){
+    es.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('in');
+      en.target.querySelectorAll('[data-to]').forEach(countUp);
+      if(en.target.hasAttribute('data-to')) countUp(en.target);
+      rvObs.unobserve(en.target);
+    }});
+  },{threshold:0.01,rootMargin:'0px 0px -12% 0px'});
+  document.querySelectorAll('.rv:not(.step-card)').forEach(function(el){rvObs.observe(el);});
+  setTimeout(function(){ document.querySelectorAll('.rv:not(.in)').forEach(function(el){ el.classList.add('in'); el.querySelectorAll('[data-to]').forEach(countUp); }); }, 4000);
+
+  // anatomy scrolly: text card drives the figure state
+  var ana=document.getElementById('anatomy');
+  function setAna(n){ if(ana) ana.setAttribute('data-s', String(n)); }
+  var stepObs=new IntersectionObserver(function(es){
+    es.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('in'); setAna(parseInt(en.target.parentNode.getAttribute('data-step'),10)); }});
+  },{rootMargin:'-15% 0px -35% 0px', threshold:0});
+  document.querySelectorAll('.step-card').forEach(function(el){stepObs.observe(el);});
+  window.__setAna=setAna;
+
+  // K-line growth: reveal candles when the figure scrolls in
+  var kObs=new IntersectionObserver(function(es){
+    es.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('in'); kObs.unobserve(en.target); }});
+  },{threshold:0.25});
+  document.querySelectorAll('.kfig').forEach(function(el){kObs.observe(el);});
+  window.__kIn=function(){ document.querySelectorAll('.kfig').forEach(function(el){el.classList.add('in');}); };
+
+  if(reduce){
+    document.querySelectorAll('.rv').forEach(function(el){ el.classList.add('in'); el.querySelectorAll('[data-to]').forEach(countUp); if(el.hasAttribute('data-to')) countUp(el); });
+    document.querySelectorAll('.kfig').forEach(function(el){el.classList.add('in');});
+    setAna(3);
+  } else { setAna(0); }
+})();
+</script>
+
+
 </body>
 </html>
